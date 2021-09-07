@@ -1,0 +1,91 @@
+.popup{
+	display: none;
+}
+.popup,.popup .mask{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 200;
+}
+.popup .mask{
+	background: rgba(0,0,0,.5);
+}
+
+.ibox-title{
+	position: relative;
+}
+.top_btn{
+	position: absolute;
+	left: 64%;
+	top: 5px;
+	z-index: 10;
+}
+.top_btn .btn{
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 6px;
+}
+.financial_mater{
+	width: 100%;
+	border: 1px solid #eee;
+}
+.financial_mater .box{
+	padding: 10px 20px 20px;
+	border-bottom: 1px solid #eee;
+}
+.financial_mater .box .name{
+	font-size: 16px;
+	color: #333;
+	line-height: 50px;
+}
+.financial_mater .box img{
+	max-width: 100%;
+}
+.financial_mater .list{
+	margin-bottom: 10px;
+}
+.financial_mater .list .line{
+	font-size: 14px;
+	color: #666;
+	line-height: 30px;
+} 
+
+.funds_pop .pop_box{
+	width: 300px;
+	padding: 10px 10px 20px;
+	background: #fff;
+	border-radius: 6px;
+	text-align: center;
+	overflow: hidden;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	z-index: 400;
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+}
+.funds_pop .top{
+	line-height: 40px;
+	font-size: 18px;
+	text-align: center;
+	color: #333;
+	margin-bottom: 20px;
+}
+.funds_pop input{
+	width: 80%;
+	height: 40px;
+	line-height: 40px;
+	border: 1px solid #999;
+	text-align: center;
+}
+.funds_pop .btn{
+	width: 80%;
+	margin-top: 10px;
+}
+.financial_btn{
+	width: 100%;
+	text-align: right;
+	margin-top: 20px;
+}
