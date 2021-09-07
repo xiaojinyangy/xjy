@@ -4,9 +4,9 @@ namespace App\Models;
 
 class AuthGroupAccesses extends Base
 {   
-	//指定主键 
+	//指定主键
+    protected $table = 'jh_auth_group_accesses';
     protected $primaryKey = 'accesses_id';
-    
     //管理员关联 hasOne('关联模型','关联模型关联id','本模型的关联id');
     public function admin()
     {

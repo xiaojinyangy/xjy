@@ -3,6 +3,7 @@
 namespace App\Models;
 use DB;
 use Illuminate\Database\Eloquent\Model;
+use Psy\Util\Str;
 
 class Base extends Model
 {   
@@ -314,5 +315,24 @@ class Base extends Model
 
         return $list;
     }
+    /**
+     * 2021-09-07
+     * @x1aojinyang
+     * 获取用户数据
+     * @param array $where where 条件 [字段,条件] [[字段,判断,条件],or,[字段,判断,条件]]
+     * @param array $field
+     * @param array $with
+     * @param int $page
+     * @param array $order
+     * @param string $group
+     * @param string $type  默认查询 count sum 聚合
+     */
+    public  function getDataAll($where=[],$field=[],$with=[],$page=15,$order=['id','desc'],$group="",$type="select"){
+            $model = $this->query();
+            if(count($where) == count($where,1)){
+                $model = $this->query($where);
+            }else{
 
+            }
+    }
 }

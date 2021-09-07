@@ -31,10 +31,10 @@ class Auth
         $this->_config=[
             'AUTH_ON'           => true, // 认证开关
             'AUTH_TYPE'         => 1, // 认证方式，1为实时认证；2为登录认证。
-            'AUTH_GROUP'        => trim($prefix . 'auth_groups'), // 用户组数据表名
-            'AUTH_GROUP_ACCESS' => trim($prefix . 'auth_group_accesses'), // 用户-用户组关系表
-            'AUTH_RULE'         => trim($prefix . 'auth_rules'), // 权限规则表
-            'AUTH_USER'         => trim($prefix . 'admins'), // 用户表
+            'AUTH_GROUP'        => trim($prefix . 'jh_auth_groups'), // 用户组数据表名
+            'AUTH_GROUP_ACCESS' => trim($prefix . 'jh_auth_group_accesses'), // 用户-用户组关系表
+            'AUTH_RULE'         => trim($prefix . 'jh_auth_rules'), // 权限规则表
+            'AUTH_USER'         => trim($prefix . 'jh_admins'), // 用户表
             'uid'               => 'admin_id', // 用户表id  由于每个用户的id名称不同 
         ];
         $this->uid='admin_id';
