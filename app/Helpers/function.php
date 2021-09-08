@@ -69,7 +69,37 @@ if (!function_exists('authchecks')) {
 		return $result;
 	}
 }
+if(!function_exists('Ajax_Arr')){
+    //接收 ajax serializeArray 数据 处理
+    function Ajax_Arr(Array $array){
+        if(is_array($array)){
+            $Array  = [];
+            foreach($array as $key=>$value){
+                $Array = array_merge($Array,[$value['name']=>$value["value"]]);
+            }
+            return $Array;
+        }
+    }
+}
 
+/**
+ * 返回api分页结果集
+ * @param $results
+ * @return array
+ */
+if (!function_exists('getPaginateData')) {
+    function getPaginateData($results)
+    {
+        return [
+            'perPage' => $results->perPage(), // 每页的数据条数
+            'currentPage' => $results->currentPage(), // 获取当前页页码
+            'lastPage' => $results->lastPage(), // 获取最后一页的页码
+            'data' => $results->items(),// 获取当前页的所有项
+            'total' => $results->total()
+        ];
+    }
+
+}
 
 
 

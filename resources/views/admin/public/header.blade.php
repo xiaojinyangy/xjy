@@ -25,6 +25,7 @@
     <link rel="stylesheet" type="text/css" href="/admin/css/demo/webuploader-demo.min.css">
     <link href="/admin/css/style.min.css?v=4.1.0" rel="stylesheet">
     <link href="/admin/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/admin/js//layui/layui/css/layui.css" rel="stylesheet">
     <style type="text/css">
         .form-required {
             color: red;
@@ -51,6 +52,8 @@
     <script type="text/javascript" src="/admin/js/plugins/pace/pace.min.js"></script>
     <script type="text/javascript" src="/admin/js/plugins/layer/laydate/laydate.js"></script><!-- 时间插件 -->
     <script type="text/javascript" src="/admin/js/plugins/iCheck/icheck.min.js"></script><!-- 选择按钮 -->
+    <script type="text/javascript" src="/admin/js/vue.js"></script><!-- 选择按钮 -->
+    <script type="text/javascript" src="/admin/js//layui/layui/layui.js"></script><!-- 选择按钮 -->
     <script type="text/javascript">
         $(document).ready(function () {
             $('.i-checks').iCheck({

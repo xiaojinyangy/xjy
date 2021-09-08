@@ -14,6 +14,6 @@ class shopPayRant extends  Base
     const UPDATED_AT = 'update_time';
 
     public function  user(){
-        $this->hasOne()
+      return  $this->hasOne(User::class,'id','user_id')
     }
 }

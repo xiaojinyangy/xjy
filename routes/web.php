@@ -99,6 +99,24 @@ Route::namespace('Admin')->prefix('admin')->middleware('auths')->group(function 
         Route::get('edit', 'ConfigController@edit');//系统配置编辑 admin/config/edit
         Route::post('postedit', 'ConfigController@postedit');//系统配置编辑-提交 admin/config/postedit
     });
+    /**
+     * 区域 管理
+     */
+    Route::prefix('area')->group(function (){
+        Route::any('index', 'AreaController@index');//区域列表 admin/area/index
+        Route::any('set', 'AreaController@set');//区域修改显示/提交 admin/area/set
+        Route::any('add', 'AreaController@add');//区域添加显示/提交 admin/area/add
+        Route::post('del', 'AreaController@del');//区域删除 admin/area/index
+    });
+    /**
+     * 档口管理
+     */
+    Route::prefix('shop_mouth')->group(function (){
+        Route::any('index', 'shopMouthController@index');//档口列表 admin/shop_mouth/index
+        Route::any('set', 'shopMouthController@set');//档口修改显示/提交 admin/shop_mouth/set
+        Route::any('add', 'shopMouthController@add');//档口添加显示/提交 admin/shop_mouth/add
+        Route::post('del', 'shopMouthController@del');//档口删除 admin/shop_mouth/del
+    });
 
     // 文件上传类
     Route::prefix('webuploads')->group(function () {
