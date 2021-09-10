@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\AreaModel;
 use App\Models\ShopMouthModel;
 use Illuminate\Http\Request;
 
@@ -12,54 +13,86 @@ class shopMouthController extends Controller
 {
     protected $Model;
     protected $Request;
+    protected $area_list;
     public function __construct(Request $request)
     {
         $this->Request = $request;
         $this->Model = new ShopMouthModel();
+        $area_model  = new AreaModel();
+        $this->area_list = $area_model->index();//区域列表
     }
 
-
+    /**
+     * 首页查询 数据和页面
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(){
         if($this->Request->method() == "POST") {
-            $result  =  $this->Model->index(["is_del"=>0]);
-            $result = getPaginateData($result);
+            $where = ['jh_shop_mouth.is_del'=>0,'jh_shop_mouth.status'=>1];
+            $area_id =   $this->Request->post('area_id');
+            $month_name =   $this->Request->post('month_name');
+
+            if(!empty($area_id)) $where['jh_shop_mouth.area_id'] = $area_id;
+            if(!empty($month_name)) $where['jh_shop_mouth.month_name'] = $month_name;
+            $result  =  $this->Model->area_mouth($where);
             if(!empty($result['data'])){
                 foreach($result['data'] as $key=>&$value){
                     $value['key'] = $key+1;
                 }
             }
-            return ['code'=>0,'msg'=>'成功','count'=>$result['total'],'data'=>$result['data']];
+            return ['code'=>0,'msg'=>'成功','data'=>$result];
         }
-        return view('admin.shop_mouth.index');
+        $area_list= $this->area_list;
+        return view('admin.shop_mouth.index',compact('area_list'));
     }
 
-
+    /**
+     * 添加 页面和提交
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function add(){
         if($this->Request->method() == "POST") {
             $form = $this->Request->post('data');
             $data = Ajax_Arr($form);
+            if(!array_key_exists('area_id',$data) && empty($data['area_id'])){
+                return rjson(0,'请选择区域名称');
+            }
             if(!array_key_exists('mouth_name',$data) && empty($data['mouth_name'])){
                 return rjson(0,'请填写档口名称');
             }
             $form['sort'] = isset( $data['sort']) ?  $data['sort'] : 0;
+            $judge = $this->Model->index(['mouth_name' => $data['mouth_name'],'area_id'=>$data['area_id']]);
+            if(!empty($judge['data'])){
+                return rjson(0,'该区域已存在该档口');
+            }
             $bool =  $this->Model->add($data);
             if($bool){
                 return rjson(200,'添加成功');
             }
             return rjson(0,'修改失败');
         }
-        return view('admin.shop_mouth.add');
+        $area_list= $this->area_list;
+        return view('admin.shop_mouth.add',compact('area_list'));
     }
 
+    /**
+     * 编辑页面和提交
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function set(){
         if($this->Request->method() == "POST") {
             $id =  $this->Request->post('id');
             if(empty($id)) return rjson(0,'网络异常请稍后再试');
+            $area_id =  $this->Request->post('area_id');
             $name =  $this->Request->post('mouth_name');
             $sort = $this->Request->post('sort');
            if(empty($name)) return rjson(0,'请填写档口名称');
             $sort = isset($sort) ? $sort : 0;
-            $bool =  $this->Model->set(['id'=>$id],['mouth_name'=>$name,'sort'=>$sort]);
+            $judge = $this->Model->index(['mouth_name' => $name,'area_id'=>$area_id]);
+            if(!empty($judge['data'])){
+                return rjson(0,'该区域已存在该档口');
+            }
+            $bool =  $this->Model->set(['id'=>$id],['mouth_name'=>$name,'sort'=>$sort,'area_id'=>$area_id]);
             if($bool){
                 return rjson(200,'修改成功');
             }
@@ -68,16 +101,21 @@ class shopMouthController extends Controller
         $id =  $this->Request->post('id');
         $result =  $this->Model->index(['id'=>$id]);
         if(!empty($result)){
-            $result = $result[0];
+            $result = $result['data'][0];
             $result['sort'] = intval($result['sort']);
         }
-        return view('admin.shop_mouth.set',compact('result','id'));
+        $area_list= $this->area_list;
+        return view('admin.shop_mouth.set',compact('result','id','area_list'));
     }
 
+    /**
+     * 删除
+     * @return array
+     */
     public function del(){
         $id =  $this->Request->post('id');
         if(empty($id)) return rjson(0,'网络异常请稍后再试');
-        $bool =  $this->Model->set(['is_del'=>1]);
+        $bool =  $this->Model->set(['id'=>$id],['is_del'=>1]);
         if($bool){
             return rjson(200,'删除成功');
         }

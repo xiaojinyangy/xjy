@@ -28,7 +28,7 @@
                 if(data.code == 200){
                     layer.msg('编辑成功');
                 }else{
-                    layer.msg('编辑失败');
+                    layer.msg(data.msg);
                 }
             })
         })

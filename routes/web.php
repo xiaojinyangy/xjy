@@ -100,6 +100,33 @@ Route::namespace('Admin')->prefix('admin')->middleware('auths')->group(function 
         Route::post('postedit', 'ConfigController@postedit');//系统配置编辑-提交 admin/config/postedit
     });
     /**
+     * 会员
+     */
+    Route::prefix('users')->group(function (){
+        Route::any('index', 'usersController@index');//用户列表 admin/users/index
+        Route::any('info', 'usersController@Info');//用户详细 admin/users/info
+        Route::post('del', 'usersController@del');//删除 admin/users/del
+    });
+    /**
+     * 员工
+     */
+    Route::prefix('job')->group(function (){
+        Route::any('index', 'JobController@index');//员工列表 admin/job/index
+        Route::any('add', 'JobController@add');//员工添加 admin/job/add
+        Route::any('set', 'JobController@set');//员工编辑 admin/job/set
+        Route::post('del', 'JobController@del');//员工删除 admin/job/del
+    });
+    /**
+     * 商铺
+     */
+    Route::prefix('shop')->group(function (){
+        Route::any('index', 'UserShopController@index');//商铺列表 admin/shop/index
+     //   Route::any('add', 'UserShopController@add');//用户详细 admin/shop/add
+        Route::any('set', 'UserShopController@set');//商铺修改 admin/shop/set
+        Route::post('del', 'UserShopController@del');//商铺删除 admin/shop/del
+    });
+
+    /**
      * 区域 管理
      */
     Route::prefix('area')->group(function (){

@@ -18,7 +18,8 @@ class AreaModel extends Base
      */
     public function index($where=['status'=>1]){
 
-        return $this->query()->where($where)->select()->paginate();
+        $result  = $this->query()->where($where)->select()->paginate();
+        return  getPaginateData($result);
     }
 
     /**

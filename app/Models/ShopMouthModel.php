@@ -17,8 +17,9 @@ class ShopMouthModel extends Base
      * @param array $where
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function index($where=['status'=>1]){
-        return $this->query()->where($where)->select()->paginate();
+    public function index($where=['is_del'=>0,'status'=>1]){
+        $result =  $this->query()->where($where)->select()->paginate();
+        return getPaginateData($result);
     }
 
     /**
@@ -48,5 +49,16 @@ class ShopMouthModel extends Base
      */
     public function del($where){
         return  $this->query()->where($where)->delete();
+    }
+
+    /**
+     *
+     */
+    public function  area_mouth($where=['jh_shop_mouth.is_del'=>0,'jh_shop_mouth.status'=>1]){
+        $result = $this->query()
+            ->rightJoin('jh_area','jh_area.id','=','jh_shop_mouth.area_id')
+            ->where($where)
+            ->select(['jh_area.area_name','jh_shop_mouth.*'])->paginate();
+        return getPaginateData($result);
     }
 }

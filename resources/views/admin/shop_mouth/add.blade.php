@@ -1,6 +1,17 @@
 @extends('admin.public.header')
 @section('body')
-    <form class="layui-form layui-form-pane" id="area" style="margin:20px ">
+    <form class="layui-form layui-form-pane" id="area" style="margin:20px;width: 400px">
+        <div class="layui-form-item">
+            <label class="layui-form-label">区域选择</label>
+            <div class="layui-input-block">
+                <select name="area_id" lay-filter="aihao">
+                    <option value="">全部</option>
+                  @foreach($area_list['data']  as $v)
+                        <option value="{{$v['id']}}">{{$v['area_name']}}</option>
+                  @endforeach
+                </select>
+            </div>
+        </div>
         <div class="layui-form-item" style="width: 500px">
             <label class="layui-form-label">档口名称</label>
             <div class="layui-input-block">
@@ -25,7 +36,7 @@
                 if(data.code == 200){
                     layer.msg('添加成功');
                 }else{
-                    layer.msg('添加失败');
+                    layer.msg(data.msg);
                 }
             })
         })

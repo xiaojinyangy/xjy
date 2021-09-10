@@ -22,7 +22,7 @@ class AreaController extends Controller
     public function index(){
           if($this->Request->method() == "POST") {
               $result  =  $this->Model->index([]);
-              $result = getPaginateData($result);
+//
               if(!empty($result['data'])){
                   foreach($result['data'] as $key=>&$value){
                       $value['key'] = $key+1;
@@ -42,6 +42,10 @@ class AreaController extends Controller
                 return rjson(0,'请填写区域名称');
             }
             $form['sort'] = isset( $data['sort']) ?  $data['sort'] : 0;
+            $judge = $this->Model->index(['area_name'=>$data['area_name']]);
+            if(!empty($judge['data'])){
+                return  rjson(0,'区域已存在');
+            }
             $bool =  $this->Model->add($data);
             if($bool){
                 return rjson(200,'添加成功');
@@ -59,6 +63,10 @@ class AreaController extends Controller
             $sort = $this->Request->post('sort');
             if(empty($name)) return rjson(0,'请填写区域名称');
             $sort = isset($sort) ? $sort : 0;
+            $judge = $this->Model->index(['area_name'=>$name]);
+            if(!empty($judge['data'])){
+              return  rjson(0,'区域已存在');
+            }
             $bool =  $this->Model->set(['id'=>$id],['area_name'=>$name,'sort'=>$sort]);
             if($bool){
                 return rjson(200,'修改成功');
@@ -68,7 +76,7 @@ class AreaController extends Controller
         $id =  $this->Request->post('id');
         $result =  $this->Model->index(['id'=>$id]);
         if(!empty($result)){
-            $result = $result[0];
+            $result = $result['data'][0];
             $result['sort'] = intval($result['sort']);
         }
         return view('admin.area.set',compact('result','id'));

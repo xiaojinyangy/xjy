@@ -25,7 +25,7 @@
                 if(data.code == 200){
                     layer.msg('添加成功');
                 }else{
-                    layer.msg('添加失败');
+                    layer.msg(data.msg);
                 }
             })
         })

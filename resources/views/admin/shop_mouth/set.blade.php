@@ -1,6 +1,17 @@
 @extends('admin.public.header')
 @section('body')
-    <form class="layui-form layui-form-pane" id="area" style="margin:20px ">
+    <form class="layui-form layui-form-pane" id="area" style="margin:20px;width:400px">
+        <div class="layui-form-item">
+            <label class="layui-form-label">区域选择</label>
+            <div class="layui-input-block">
+                <select name="area_id" lay-filter="aihao">
+                    <option value="">全部</option>
+                    @foreach($area_list['data']  as $v)
+                        <option value="{{$v['id']}}" {{$result['area_id'] == $v['id'] ? 'selected' : ''}}>{{$v['area_name']}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
         <div class="layui-form-item" style="width: 500px">
             <label class="layui-form-label">档口名称</label>
             <div class="layui-input-block">
@@ -25,11 +36,12 @@
             var sort = $("input[name=sort]").val();
             var mouth_name = $("input[name=mouth_name]").val()
             $.post("{{url('admin/shop_mouth/set')}}",{id:id,sort:sort,mouth_name:mouth_name},function (data) {
-                if(data.code == 200)
+                if(data.code == 200){
                     layer.msg('编辑成功');
                 }else{
-                    layer.msg('编辑失败');
-                }
+                        layer.msg(data.msg);
+                    }
+
             })
         })
 

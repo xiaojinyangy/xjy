@@ -98,7 +98,27 @@ if (!function_exists('getPaginateData')) {
             'total' => $results->total()
         ];
     }
+}
 
+/**
+ * 搜索数组处理
+ * array()
+ */
+if(!function_exists('searchArray')){
+    function searchArray($request,$array){
+        $where = [];
+        $search = [];
+        $timeArr = [];//定义时间字段数组
+        foreach($array as $key =>$sybol){
+            $value = $request->input($key);
+            if(!isset($value) || empty($value)){
+                continue;
+            }
+            $search[$key]  = $value;
+            $where[] = [$key,$sybol,$value];
+        }
+        return [$where,$search];
+    }
 }
 
 
