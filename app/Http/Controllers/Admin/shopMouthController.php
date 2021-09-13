@@ -121,4 +121,10 @@ class shopMouthController extends Controller
         }
         return rjson(0,'删除失败');
     }
+
+
+    public function area_mouth(){
+        $area_id = $this->Request->get('area_id');
+        return $this->Model->index(['area_id'=>$area_id]);
+    }
 }

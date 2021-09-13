@@ -53,6 +53,7 @@
                     // {type:'checkbox'},
                     {field:'key',  title: '序号',sort: true,width:60,}
                     ,{field:'id',title:'Id',hide:true}
+                    ,{field:'name',table:'用户姓名'}
                     ,{field:'area_name',  title: '区域'}
                     ,{field:'mouth_name', title: '档口'}
                     ,{field:'phone', title: '电话'}
@@ -72,7 +73,7 @@
             table.on('tool(user_table)',function (obj){
                 var data = obj.data; //当前行的数据
                 if(obj.event == 'detail'){
-                    var url  = "{{url('admin/users/info')}}?id=" + data.user_id;
+                    var url  =  window.location.href = "{{url('admin/shop/set')}}?id="+data.id;;
                     window.location.href = url;
                 }else if(obj.event == 'del'){
                     $.post("{{url('admin/shop/del')}}",{id:data.id},function (data) {

@@ -47,10 +47,10 @@ class UserShopController extends  Controller
 
     public function set(){
        $id =  $this->Request->post('id');
-       $id =  $this->Request->post('id');
         if(empty($id))return rjson(0,'网络异常,请刷新重试');
         if($this->Request->method() == "POST"){
-            $data = $this->Request->post('');
+            $data = $this->Request->post('data');
+            $data =   Ajax_Arr($data);
             $bool = $this->Model->where(['id'=>$id])->update($data);
             if($bool){
                 return rjson(200,'修改成功');
@@ -58,11 +58,11 @@ class UserShopController extends  Controller
             return rjson(0,'修改失败');
 
         }
-       $result =  $this->Model->index(['id',$id]);
+       $result =  $this->Model->index(['id',$id],2);
         $area_model = new AreaModel();
         $area_list = $area_model->index()['data'];
         $mouth_model = new ShopMouthModel();
-        $mouth_list = $area_model->index()['data'];
+        $mouth_list = $mouth_model->index(['area_id'=>$result['area_id']])['data'];
         return view('admin/shop/set',compact('result','area_list','mouth_list'));
     }
 
@@ -75,4 +75,37 @@ class UserShopController extends  Controller
         }
         return rjson(0,'删除失败');
     }
+
+    public function getUserShop(){
+        $id =  $this->Request->post('id');
+        if(empty($id))return rjson(0,'网络异常,请刷新重试');
+        if($this->Request->method() == "POST"){
+            $shop_model = new Shop();
+            $area_id = $this->Request->post('area_id');
+            $mouth_id = $this->Request->post('mouth_id');
+            $where= ['shop.user_id' => $id];
+            if(!empty($area_id)){
+                $where['shop.area_id'] = $area_id;
+            }
+            if(empty($mouth_id)){
+                $where['shop.mouth_id'] = $mouth_id;
+            }
+            $data =  $shop_model->index($where);
+            foreach($data['data'] as $key=>&$v){
+                $v['key'] = $key+1;
+               if( $v['status'] == 0){
+                   $v['status'] = "待审核";
+               }else if($v['status'] == 1 ){
+                   $v['status'] = "通过";
+               }else{
+                   $v['status'] = "拒绝";
+               }
+            }
+            return rjson(0,"加载成功",$data);
+        }
+        $area_model = new AreaModel();
+        $area_list = $area_model->index();
+        return view('users.user_shop',compact('area_list','id'));
+    }
+
 }

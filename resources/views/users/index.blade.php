@@ -22,8 +22,8 @@
     </div>
     <table class="layui-table-body" id="user_table" lay-filter="user_table"></table>
         <script type="text/html" id="barDemo">
+         <a class="layui-btn layui-btn-sm" lay-event="shop">店铺</a>
         <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="detail">查看</a>
-{{--        <a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>--}}
         <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>
     </script>
 <script>
@@ -80,8 +80,8 @@
                           });
                       }
                })
-            }else if(obj.event == 'edit'){
-
+            }else if(obj.event == 'shop'){
+                  window.location.href =  "{{url('admin/users/user_shop')}}?id=" + data.user_id;
             }
         })
     });
