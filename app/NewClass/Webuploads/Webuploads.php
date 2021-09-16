@@ -1,7 +1,9 @@
 <?php 
 namespace app\NewClass\Webuploads;
 
-class Webuploads 
+use App\Models\UpImageModel;
+
+class Webuploads
 {   
     
     //字符串转码
@@ -171,11 +173,19 @@ class Webuploads
 				  //   'filePaht'=>$uploadPath,//文件路径  绝对路径
 				  //   'fileSuffixes'=>$pathInfo['extension'],//文件后缀
 			   // ];
-			   
+			   $data = [
+			       'file_size' =>$_FILES['file']['size'],
+                   'filename'  => $pathInfo['basename'],
+                   'file_path' => $this->filepath($uploadPath),
+                   'suffix'=> $pathInfo['extension'],
+                   'created_at' => date('Y-m-d H:i:s')
+               ];
+			   $model = new UpImageModel();
+                $id = $model->query()->insertGetId($data);
 			   $response = [
+			       'id' => $id,
 				    'filePaht'=>$this->filepath($uploadPath),//文件路径  相对路径
 			   ];
-			  
 			   return json_encode($response);
 		  }
 		  

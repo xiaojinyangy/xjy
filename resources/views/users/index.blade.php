@@ -52,15 +52,15 @@
                 }
             ,cols: [[
                 // {type:'checkbox'},
-                {field:'key',  title: '序号',sort: true,width:60,}
-                ,{field:'user_id',  title: 'ID', hide:true}
+                {field:'key',  title: '序号',sort: true,width:60,align:"center"}
+                ,{field:'user_id',  title: 'ID', hide:true,align:"center"}
                 ,{field:'headpic', title: '头像', width: '10%', minWidth: 100,type:"image"} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
-                ,{field:'nick_name', title: '用户名'}
-                ,{field:'phone', title: '电话'}
-                ,{field:'sex', title: '性别'}
-                ,{field:'identity', title: '身份',}
-                ,{field:'region', title: '城市'}
-                ,{field:'regist_time', title: '注册时间',sort: true }
+                ,{field:'nick_name', title: '用户名',align:"center"}
+                ,{field:'phone', title: '电话',align:"center"}
+                ,{field:'sex', title: '性别',align:"center"}
+                ,{field:'identity', title: '身份',align:"center"}
+                ,{field:'region', title: '城市',align:"center"}
+                ,{field:'regist_time', title: '注册时间',sort: true,align:"center"}
                 ,{field:'right', title: '操作', width:200,toolbar:"#barDemo"}
             ]]
         });

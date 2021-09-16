@@ -137,6 +137,18 @@ Route::namespace('Admin')->prefix('admin')->middleware('auths')->group(function 
         Route::post('del', 'AreaController@del');//区域删除 admin/area/index
     });
     /**
+     * 基础设置
+     */
+    Route::prefix('basics')->group(function (){
+        Route::any('index', 'BasicsController@index');//费用编辑(提交/页面)列表 admin/area/index
+        Route::any('list', 'BasicsController@list');//费用列表  admin/basics/list
+        Route::any('add', 'BasicsController@add');//费用添加  admin/basics/add
+        Route::any('rant_ext', 'BasicsController@rant_ext');//附加费(显示和编辑) admin/basics/rant_ext
+        Route::post('del', 'BasicsController@del');//费用删除 admin/basics/del
+        Route::post('ext_del', 'BasicsController@ext_del');//区域删除 admin/basics/ext_del
+
+    });
+    /**
      * 档口管理
      */
     Route::prefix('shop_mouth')->group(function (){
@@ -145,9 +157,41 @@ Route::namespace('Admin')->prefix('admin')->middleware('auths')->group(function 
         Route::any('add', 'shopMouthController@add');//档口添加显示/提交 admin/shop_mouth/add
         Route::post('del', 'shopMouthController@del');//档口删除 admin/shop_mouth/del
         Route::get('area_mouth', 'shopMouthController@area_mouth');//档口删除 admin/shop_mouth/area_mouth
-
+    });
+    /**
+     * 轮播图
+     */
+    Route::prefix('image')->group(function (){
+        Route::any('index', 'ImageController@index');//轮播图 admin/image/index
+        Route::any('add', 'ImageController@add');//添加轮播图 admin/image/add
+        Route::any('set', 'ImageController@set');//修改轮播图 admin/image/set
+        Route::post('del', 'ImageController@del');//删除轮播图 admin/image/del
+    });
+    /**
+     * 首页设置
+     */
+    Route::prefix('system')->group(function (){
+        Route::any('text', 'SetupController@imageText');//图文介绍编辑 admin/system/text
+        Route::any('phone', 'SetupController@setPhone');//联系电话编辑 admin/system/phone
     });
 
+    /**
+     * 消息
+     */
+    Route::prefix('message')->group(function (){
+        Route::any('index', 'MessageController@index');//消息列表 admin/message/index
+        Route::any('add', 'MessageController@add');//消息添加  admin/message/add
+        Route::any('set', 'MessageController@set');//消息修改  admin/message/set
+        Route::post('del', 'MessageController@del');//消息删除  admin/message/del
+    });
+
+    /**
+     * 水电费列表
+     */
+    Route::prefix('hydropower')->group(function (){
+        Route::any('index', 'HydropowerController@index');//图文介绍编辑 admin/hydropower/index
+        Route::any('phone', 'HydropowerController@setPhone');//联系电话编辑 admin/hydropower/phone
+    });
     // 文件上传类
     Route::prefix('webuploads')->group(function () {
         Route::any('index', 'WebuploadsController@index');//上传文件 admin/webuploads/index

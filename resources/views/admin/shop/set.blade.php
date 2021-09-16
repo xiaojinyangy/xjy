@@ -56,7 +56,7 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">营业执照照片</label>
+            <label class="layui-form-label"style="width: 150px">营业执照照片</label>
             <div class="layui-input-inline">
                 <img src="{{$result['license']}}" onclick="imagePreviewDialog(this.src)" width="100px" height="100px" class="layuis-icon">
             </div>
@@ -68,15 +68,9 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">实际控制人电话</label>
+            <label class="layui-form-label" style="width: 150px">实际控制人电话</label>
             <div class="layui-input-inline">
                 <input type="text" name="now_user_phone"   class="layui-input" value="{{$result['now_user_phone']}}">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">实际控制人身份证号码</label>
-            <div class="layui-input-inline">
-                <input type="text" name=now_user_phone"   class="layui-input" value="{{$result['now_user_phone']}}">
             </div>
         </div>
 
