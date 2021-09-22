@@ -17,8 +17,9 @@
             </div>
         </form>
         <div>
-            <a id="search" class="layui-btn searchBtn">搜索</a>
-            <a href="{{url('admin/job/add')}}" class="layui-btn layui-btn-normal layui-btn-mini" lay-event="detail">添加</a>
+            <a id="search" class="layui-btn searchBtn layui-btn-sm">搜索</a>
+            <a href="{{url('admin/job/index')}}" class="layui-btn layui-btn-primary layui-btn-sm">清空</a>
+            <a href="{{url('admin/job/add')}}" class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail">添加</a>
         </div>
     </div>
     <table class="layui-table-body" id="user_table" lay-filter="user_table"></table>
@@ -38,6 +39,7 @@
                 args[2] === undefined && (args[2] = true);
                 return tableReload.apply(null, args);
             };
+            var  jon_number =  $("input[name=jon_number]").val()
             table.render({
                 elem: '#user_table',
                 method:'post',
@@ -45,7 +47,6 @@
                 limits:[20,30,60,100],
                 // cellMinWidth: 80,//全局定义常规单元格的最小宽度，layui 2.2.1 新增
                 page:true,
-                method:"post",
                 parseData:function(res){
                     return{
                         "code":res.code,
@@ -56,7 +57,7 @@
                     }
                 },request: {
                     limitName: 'perPage' //每页数据量的参数名，默认：limit
-                },
+                },where:{jon_number:jon_number},
                 cols: [[
                     // {type:'checkbox'},
                     {field:'id', title:'ID', hide:true},

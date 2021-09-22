@@ -21,6 +21,7 @@ class Shop extends Base
             ->leftJoin('jh_area as area','area.id','=','shop.area_id')
             ->leftJoin('jh_shop_mouth as shop_mouth','shop_mouth.id',"=","mouth_id")
             ->select(['shop.*','area.area_name','shop_mouth.mouth_name'])
+            ->where($where)
             ->orderBy('shop.id','desc');
         //$with = [            "area" => function($query){$query->select(['id','area_name']);},
 //            "mouth"=>function($query){

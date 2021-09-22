@@ -17,7 +17,8 @@
             </div>
         </form>
         <div>
-            <a id="search" class="layui-btn searchBtn">搜索</a>
+            <a id="search" class="layui-btn searchBtn layui-btn-sm">搜索</a>
+            <a href="{{url('admin/users/index')}}" class="layui-btn layui-btn-primary layui-btn-sm">清空</a>
         </div>
     </div>
     <table class="layui-table-body" id="user_table" lay-filter="user_table"></table>
@@ -31,6 +32,7 @@
 
         var table = layui.table;
         var laytpl = layui.laytpl
+        var phone = $("input[name=phone]").val()
         table.render({
             elem: '#user_table'
             ,url:'{{url('admin/users/index')}}'
@@ -47,10 +49,11 @@
                         "page":res.data.currentPage,
                         "count":res.data.total
                     }
-                },request: {
+                },
+                request: {
                     limitName: 'perPage' //每页数据量的参数名，默认：limit
-                }
-            ,cols: [[
+                },where:{phone:phone},
+                cols: [[
                 // {type:'checkbox'},
                 {field:'key',  title: '序号',sort: true,width:60,align:"center"}
                 ,{field:'user_id',  title: 'ID', hide:true,align:"center"}
@@ -74,7 +77,7 @@
                $.post("{{url('admin/users/del')}}",{id:data.user_id},function (data) {
                       if(data.code == 200){
                           layer.msg(data.msg)
-                          var phone = $("input[name=phone]")
+                          var phone = $("input[name=phone]").val()
                           table.reload('user_table', {
                               url: "{{url('admin/users/index')}}",where: {phone:phone} //设定异步数据接口的额外参数
                           });
@@ -83,6 +86,14 @@
             }else if(obj.event == 'shop'){
                   window.location.href =  "{{url('admin/users/user_shop')}}?id=" + data.user_id;
             }
+        })
+
+        $("#search").click(function () {
+
+            var phone = $("input[name=phone]").val();
+            table.reload('user_table', {
+                url: "{{url('admin/users/index')}}",where: {phone:phone} //设定异步数据接口的额外参数
+            });
         })
     });
 </script>

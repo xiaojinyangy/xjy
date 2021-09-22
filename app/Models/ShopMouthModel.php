@@ -55,10 +55,18 @@ class ShopMouthModel extends Base
      *
      */
     public function  area_mouth($where=['jh_shop_mouth.is_del'=>0,'jh_shop_mouth.status'=>1]){
+        if(array_key_exists('mouth_name',$where)){
+            $likeWhere = $where['mouth_name'];
+            unset($where['mouth_name']);
+        }
         $result = $this->query()
             ->rightJoin('jh_area','jh_area.id','=','jh_shop_mouth.area_id')
             ->where($where)
-            ->select(['jh_area.area_name','jh_shop_mouth.*'])->paginate();
+            ->select(['jh_area.area_name','jh_shop_mouth.*']);
+        if(isset($likeWhere)){
+            $result = $result->where('jh_shop_mouth.mouth_name','like',"%$likeWhere%");
+        }
+        $result =   $result->paginate();
         return getPaginateData($result);
     }
 }

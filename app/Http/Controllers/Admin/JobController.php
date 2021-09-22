@@ -25,7 +25,7 @@ class JobController extends Controller
      */
     public function  index(){
         if($this->Request->method() == "POST"){
-            $job_number = $this->Request->post('job_number');
+            $job_number = $this->Request->post('jon_number');
             $where = [];
             if(!empty($job_number)){
                 $where = ["job_number" => $job_number];

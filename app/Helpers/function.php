@@ -75,7 +75,9 @@ if(!function_exists('Ajax_Arr')){
         if(is_array($array)){
             $Array  = [];
             foreach($array as $key=>$value){
-                $Array = array_merge($Array,[$value['name']=>$value["value"]]);
+                if(!empty($value["value"])){
+                    $Array = array_merge($Array,[$value['name']=>$value["value"]]);
+                }
             }
             return $Array;
         }

@@ -29,11 +29,14 @@ class shopMouthController extends Controller
     public function index(){
         if($this->Request->method() == "POST") {
             $where = ['jh_shop_mouth.is_del'=>0,'jh_shop_mouth.status'=>1];
-            $area_id =   $this->Request->post('area_id');
-            $month_name =   $this->Request->post('month_name');
-
-            if(!empty($area_id)) $where['jh_shop_mouth.area_id'] = $area_id;
-            if(!empty($month_name)) $where['jh_shop_mouth.month_name'] = $month_name;
+            $search_data = $this->Request->post('form');
+          if(!empty($search_data)){
+              $search_data = Ajax_Arr($search_data);
+              if(isset($search_data['mouth_name'])) $where['mouth_name'] = $search_data['mouth_name'];
+              if(isset($search_data['area_id'])){
+                  $where['jh_shop_mouth.area_id'] = $search_data['area_id'];
+              }
+          }
             $result  =  $this->Model->area_mouth($where);
             if(!empty($result['data'])){
                 foreach($result['data'] as $key=>&$value){

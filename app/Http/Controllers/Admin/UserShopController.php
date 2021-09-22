@@ -23,13 +23,14 @@ class UserShopController extends  Controller
     public function index(){
         if($this->Request->method() == "POST"){
             $where= [];
-            $area_id = $this->Request->post('area');
-            if(!empty($area_id)){
-                $where['shop.area_id'] = $area_id;
+            $search =  $this->Request->post('form');
+            $search = Ajax_Arr($search);
+            if(isset($search['area_id'])){
+
+                $where['shop.area_id'] = $search['area_id'];
             }
-            $month_id = $this->Request->post('month');
-            if(!empty($month_id)){
-                $where['shop.month_id'] = $area_id;
+            if(isset($search['mouth_name'])){
+                $where['shop_mouth.mouth_name'] = $search['mouth_name'];
             }
             $result =  $this->Model->index($where);
             if(!empty($result['data'])){
@@ -42,7 +43,9 @@ class UserShopController extends  Controller
             }
             return rjson(0,'加载成功',$result);
         }
-        return view('admin/shop/index');
+        $area_model = new AreaModel();
+        $area_list = $area_model->index();
+        return view('admin/shop/index',compact('area_list'));
     }
 
     public function set(){

@@ -24,7 +24,6 @@ class usersController extends Controller
             $where = [];
             $phone = $this->Request->input('phone');
             if(!empty($phone)){
-                $search = ['search' =>$phone ];
                 $where = ['phone'=>$phone];
             };
             $result = $this->Model->getUserAll(0,$where);
@@ -43,7 +42,6 @@ class usersController extends Controller
                     $v['headpic'] = "<img src=$v[headpic] width='80px' height='60'>";
                 }
             }
-          $result['phone'] = 18774265532;
             return rjson(0,'加载成功',$result);
       }
       return view('users.index');

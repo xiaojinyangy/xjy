@@ -1,7 +1,7 @@
 @extends('admin.public.header')
 @section('body')
 
-    <form class="layui-form layui-form-pane" action="" id="from">
+    <form class="layui-form layui-form-pane" action="" id="from" style="margin: 20px 20px">
         <div class="layui-form-item" style="display: inline-block">
             <label class="layui-form-label">区域选择</label>
             <div class="layui-input-block">

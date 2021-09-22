@@ -9,15 +9,21 @@
     </style>
     <div style="margin:20px" id="sreach">
         <form class="layui-form layui-form-pane" id="area" style="margin:20px;width:100%">
-{{--            <div class="layui-form-item" style="width: 500px;display: inline-block" >--}}
-{{--                <label class="layui-form-label">手机号</label>--}}
-{{--                <div class="layui-input-block">--}}
-{{--                    <input type="text" name="phone" autocomplete="off" placeholder="请输入手机号名称" class="layui-input" value="">--}}
-{{--                </div>--}}
-{{--            </div>--}}
+            <div class="layui-form-item" style="display: inline-block">
+                <label class="layui-form-label">区域选择</label>
+                <div class="layui-input-block">
+                    <select name="area_id" lay-filter="aihao">
+                        <option value="">全部</option>
+                        @foreach($area_list['data']  as $v)
+                            <option value="{{$v['id']}}">{{$v['area_name']}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
         </form>
         <div>
-            <a id="search" class="layui-btn searchBtn">搜索</a>
+            <a id="search" class="layui-btn searchBtn layui-btn-sm">搜索</a>
+            <a href="{{url('admin/shop_mouth/index')}}" class="layui-btn layui-btn-primary layui-btn-sm">清空</a>
             <div style="float: right">
                 <a id="add" class="layui-btn layui-btn-normal" >添加</a>
             </div>
@@ -34,6 +40,7 @@
         layui.use(['table','laytpl'], function(){
             var table = layui.table;
             var laytpl = layui.laytpl
+            var area_id = $("select[name=area_id]").val();
             table.render({
                 elem: '#user_table'
                 ,url:'{{url('admin/basics/list')}}'
@@ -52,7 +59,7 @@
                     }
                 },request: {
                     limitName: 'perPage' //每页数据量的参数名，默认：limit
-                }
+                },where:{area_id:area_id}
                 ,cols:[[
                     // {type:'checkbox'},
                     {field:'key',  title: '序号',sort: true,width:60,}
@@ -75,9 +82,9 @@
                     $.post("{{url('admin/basics/del')}}",{id:data.id},function (data) {
                         if(data.code == 200){
                             layer.msg(data.msg)
-                            // var phone = $("input[name=phone]")
+                            var area_id = $("select[name=area_id]").val();
                             table.reload('user_table', {
-                                url: "{{url('admin/basics/list')}}",where: {} //设定异步数据接口的额外参数
+                                url: "{{url('admin/basics/list')}}",where: {area_id:area_id} //设定异步数据接口的额外参数
                             });
                         }
                     })
@@ -85,10 +92,18 @@
 
                 }
             })
+            $("#search").click(function () {
+                var area_id = $("select[name=area_id]").val();
+                table.reload('user_table', {
+                    url: "{{url('admin/basics/list')}}",where: {area_id:area_id} //设定异步数据接口的额外参数
+                });
+            })
         });
         $("#add").click(function () {
             window.location.href = "{{url('admin/basics/add')}}"
         })
+        //搜索
+
     </script>
 
 

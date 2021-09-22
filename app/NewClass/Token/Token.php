@@ -27,7 +27,7 @@ class Token{
   	public function __construct()
   	{      
            date_default_timezone_set("PRC");
-           $this->Pwds=new Pwds('kanshenmekandashabi');
+           $this->Pwds=new Pwds('guangzhouzhengjiehuodong');
   	}
 
   	//获取客户端真实ip

@@ -68,7 +68,7 @@ class BasicsController
             return rjson(0,'加载成功',$result);
         }
         $area_model = new AreaModel();
-        $area_list = $area_model->index()['data'];
+        $area_list = $area_model->index();
       return  view('admin.basics.list',compact('area_list'));
     }
 

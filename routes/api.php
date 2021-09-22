@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 */
 
 //无需验证
-Route::namespace('Index')->prefix('index')->middleware('throttle:60,1')->group(function () {
+Route::namespace('Index')->prefix('api')->middleware('throttle:60,1')->group(function () {
     
     //登录注册模块
     Route::prefix('login')->group(function () {
@@ -31,7 +31,7 @@ Route::namespace('Index')->prefix('index')->middleware('throttle:60,1')->group(f
 
 
 //需要验证-用户端
-Route::namespace('Index')->prefix('index')->middleware('apiauths','throttle:60,1')->group(function () {
+Route::namespace('Index')->prefix('api')->middleware('apiauths','throttle:60,1')->group(function () {
 
     //用户
     Route::prefix('user')->group(function () {

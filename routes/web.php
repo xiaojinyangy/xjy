@@ -189,8 +189,17 @@ Route::namespace('Admin')->prefix('admin')->middleware('auths')->group(function 
      * 水电费列表
      */
     Route::prefix('hydropower')->group(function (){
-        Route::any('index', 'HydropowerController@index');//图文介绍编辑 admin/hydropower/index
+        Route::any('index', 'HydropowerController@index');//水电费 admin/hydropower/index
         Route::any('phone', 'HydropowerController@setPhone');//联系电话编辑 admin/hydropower/phone
+    });
+    /**
+     * 缴费列表
+     */
+    Route::prefix('shoprant')->group(function (){
+        Route::any('index', 'shopRantController@index');//缴费列表 admin/shoprant/index
+        Route::any('invoice', 'shopRantController@invoice');//上传发票 admin/shoprant/invoice
+        Route::any('surepay', 'shopRantController@surepay');//确认支付 admin/shoprant/surepay
+
     });
     // 文件上传类
     Route::prefix('webuploads')->group(function () {
