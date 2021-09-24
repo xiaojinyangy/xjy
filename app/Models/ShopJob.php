@@ -10,4 +10,8 @@ class ShopJob extends Base
     protected $primaryKey = 'id';
     const CREATED_AT =  "create_time";
     const UPDATED_AT = "update_time";
+    public function job()
+    {
+        return $this->hasOne(JobModel::class,'id','job_id');
+    }
 }

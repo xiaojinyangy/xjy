@@ -47,4 +47,7 @@ class Shop extends Base
     public function mouth(){
         return $this->hasOne(ShopMouthModel::class,'id','mouth_id');
     }
+    public function job(){
+        return $this->hasMany(ShopJob::class,'shop_id','id');
+    }
 }

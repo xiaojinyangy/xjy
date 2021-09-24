@@ -16,10 +16,16 @@ class AreaModel extends Base
      * @param array $where
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function index($where=['status'=>1]){
+    public function index($where=['status'=>1],$state=1){
 
-        $result  = $this->query()->where($where)->select()->paginate();
-        return  getPaginateData($result);
+        $result  = $this->query()->where($where)->orderBy('id','desc');
+        if($state == 1 ){
+            $result = $result->paginate();
+            return  getPaginateData($result);
+        }else if($state == 2){
+            $result = $result->get();
+        }
+        return  $result;
     }
 
     /**
