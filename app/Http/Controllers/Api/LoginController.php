@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\JobModel;
+use App\Http\Controllers\Api\ww;
+use App\Models\RecordJobModel;
 use App\Models\User;
+use app\NewClass\Token\Pwds;
 use app\NewClass\Token\Token as Tokens;
 use Illuminate\Http\Request;
 
@@ -95,19 +97,68 @@ class LoginController extends Controller
         }
     }
 
-
+    /**
+     * 员工登录
+     * @param Request $request
+     * @return array
+     */
     public function passLogin(Request $request){
         $user_id = $request->get('id');
         $job_number = $request->post('job_number');
         $password = $request->post('pass');
-        $model = new JobModel();
+        $model = new RecordJobModel();
        $check_job =  $model->index(['job_number'=>$job_number],2);
        if(empty($check_job)) return rjson('工号不存在');
-        $password =  md5(md5($password).config('appConfig.passKey'))
+        $password =  md5(md5($password).config('appConfig.passKey'));
        if($check_job->password !=  $password ) return rjson('密码错误');
        if(isset($check_job->user_id)){
            $model->update(['job_number'=>$job_number],['user_id'=>$user_id]);
        }
+       $check =  $this->saveToken($check_job);
+       if(empty($check)){
+           return rjson(0,'登录失败');
+       }
        return rjson(200,'登录成功');
+    }
+
+    public function saveToken($userData){
+        if(!empty($userData)){
+            $Tokens = new Tokens();
+            $Pwds = new Pwds('guangzhouzhengjiehuodong');
+            $redis = linkRedis(1);
+            $userData->ip = $Tokens->get_real_ip();
+            $token  = $Pwds->encrypt($userData);
+            $redis->setex($token,60*60*24*7,$userData);
+            return $token;
+        }else{
+            return [];
+        }
+    }
+
+    public function loginOut(Request $request){
+        $Tokens = new Tokens();
+        $token=$request->header('token');
+        $Tokens->loginout($token);
+        return rjson(200,'退出成功');
+    }
+
+    public function getUserPhone(Request $request){
+        $user_id  = $request->get('id');
+        $appid = env('WX_APP_ID');
+        $appkey = env('WX_APP_KEY');
+        $encryptedData = $request->post("encryptedData");
+        $iv = $request->post("iv");
+        $code = $request->post("code");
+        $weixin = file_get_contents("https://api.weixin.qq.com/sns/jscode2session?appid=$appid&secret=$appkey&js_code=".$code."&grant_type=authorization_code");//通过code换取网页授权session_key
+        $jsonCode = json_decode($weixin,true);
+        //   $open_id = $jsonCode["openid"];
+        $access_token = $jsonCode["session_key"];
+        $decode  = new WXBizDataCrypt($appid,$appkey);
+        $data = $decode->decryptData($encryptedData,$iv);
+        $result = json_decode($data,true);
+        $user_phone = $result["purePhoneNumber"];
+        $user_model = new User();
+        $user_model->edit(['id'=>$user_id],['phone'=>$user_phone]);
+        return rjson(200,"授权成功",$result);
     }
 }

@@ -34,6 +34,11 @@ class JobController extends Controller
        }
        return rjson(200,'加载成功',$areaData);
     }
+
+    /**
+     * 申请商铺
+     * @return array
+     */
     public function Apply(){
         $user_id = $this->request->get('id');
         $data = $this->request->post('.post');
@@ -57,10 +62,17 @@ class JobController extends Controller
         return   rjson(200,'申请失败');
     }
 
+    /**
+     * 员工的 商品
+     * @return array
+     */
     public function job_shop(){
         $user_id = $this->request->get('id');
+        $test = $this->request->post('state');
         $user_id = 1000;
+
         $job_model  = new JobModel();
+
         $shop_job_model = new ShopJob();
         $job_data =  $job_model->query()->where(['user_id'=>$user_id])->first();
         if(empty($job_data)){

@@ -31,7 +31,7 @@ class Token{
   	}
 
   	//获取客户端真实ip
-  	private function get_real_ip()
+  	public function get_real_ip()
   	{
   	    $ip=false;
   	    //客户端IP 或 NONE 
@@ -102,7 +102,38 @@ class Token{
         	  return ['code'=>4,'msg'=>'登录过期！'];
         }
     }
-    
+    //验证token 是否正确 是否 过期
+    public function checkLogin($token)
+    {
+        if(empty($token)){
+            return ['code'=>0,'msg'=>'参数不能为空！'];
+        }
+        $redis = linkRedis(1);
+        $cache=$redis->get($token);
+        if($cache){
+            //判断 token 是否可以解密
+            $row=$this->Pwds->decrypt($token);//token解密
+            if(empty($row)){
+                $redis->del($token);
+                return ['code'=>2,'msg'=>'数据错误！'];
+            }
+
+            $row=json_decode($row,true);
+            if(empty($row)){
+                return ['code'=>3,'msg'=>'数据错误！！'];
+            }
+
+            //获取缓存的剩余时间
+            $time=$redis->ttl($token);
+            if($time<=86400){//当剩余有效时间小于86400秒的时候
+                $redis->expire($token,604800);//延长有效时间
+            }
+            return ['code'=>1,'msg'=>'ok！','row'=>$row];
+        }else{
+            //token不存在
+            return ['code'=>4,'msg'=>'登录过期！'];
+        }
+    }
     //退出 删除token
     public function loginout($token)
     {

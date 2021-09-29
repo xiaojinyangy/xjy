@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
-use App\Models\JobModel;
+use App\Models\RecordJobModel;
 use App\Models\ShopJob;
 use Illuminate\Http\Request;
 
@@ -16,7 +16,7 @@ class JobController extends Controller
     public function __construct(Request $request)
     {
         $this->Request = $request;
-        $this->Model = new JobModel(); //员工
+        $this->Model = new RecordJobModel(); //员工
     }
 
     /**\

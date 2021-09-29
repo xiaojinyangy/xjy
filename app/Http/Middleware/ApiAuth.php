@@ -26,7 +26,8 @@ class ApiAuth
 
         $Tokens=new Tokens;
         $row=$Tokens->check($token);
-        if($row['code']!=1){
+        $checkRow = $Tokens->checkLogin($token);
+        if($row['code']!=1 &&  $checkRow['code'] != 1){
              throw new HttpResponseException(response()->json(['code'=>10,'msg'=>$row['msg']]));
         }
         unset($Tokens);

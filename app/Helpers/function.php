@@ -140,7 +140,18 @@ if(!function_exists('searchArray')){
         }
         return $tree;
     }
+}
 
+if(!function_exists('linkRedis')){
+    function linkRedis($db,$password=""){
+        $redis = new \Redis();
+        $redis->connect(env('REDIS_HOST'),env('REDIS_PORT'));
+        if(!empty($password)){
+            $redis->auth(env('REDIS_PASSWORD'));
+        }
+       $redis->select($db);
+        return $redis;
+    }
 }
 
 
