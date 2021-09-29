@@ -40,6 +40,7 @@ class shopController extends Controller
         $returnData = [
             "user_name" => $userInfo->nick_name,
             "phone" =>  $userInfo->phone,
+            "headpic" => $userInfo->headpic,
             "shop_number" => $result['total'],
             "list" => $result['data'],
           //   $data['user_id'] = $user_id
