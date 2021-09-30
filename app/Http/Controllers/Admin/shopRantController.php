@@ -39,8 +39,9 @@ class shopRantController extends Controller
                 $where['data'] = ['year'=>$year,'month'=>$month];
             }
             $result =  $this->model->index($where,$wheres);
-           foreach($result['data'] as &$value){
+           foreach($result['data'] as $key=>&$value){
                $value['button'] = "";
+               $value['key'] = $key+1;
                if($value['pay_status'] ==0 ){
                    $value['button'] = "<a class=\"layui-btn layui-btn-primary layui-btn-sm\" lay-event=\"detail\">确认支付</a>";
                }

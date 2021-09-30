@@ -90,7 +90,7 @@ class UserShopController extends  Controller
             if(!empty($area_id)){
                 $where['shop.area_id'] = $area_id;
             }
-            if(empty($mouth_id)){
+            if(!empty($mouth_id)){
                 $where['shop.mouth_id'] = $mouth_id;
             }
             $data =  $shop_model->index($where);

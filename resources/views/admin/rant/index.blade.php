@@ -51,7 +51,8 @@
             <a  href="{{url('admin/shoprant/index')}}" class="layui-btn layui-btn-primary layui-btn-sm">清空</a>
         </div>
     </div>
-    <table class="layui-table-body" id="user_table" lay-filter="user_table"></table>
+    <table class="layui-table-body" id="user_table" lay-filter="user_table">
+    </table>
     <script type="text/html" id="barDemo">
         <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="detail">确认支付</a>
         <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="uppay">上传发票</a>
@@ -85,7 +86,8 @@
                         "msg":res.msg,
                         "data":res.data.data,
                         "page":res.data.currentPage,
-                        "count":res.data.total
+                        "count":res.data.total,
+                        "sum":res.data.sum
                     }
                 },request: {
                     limitName: 'perPage' //每页数据量的参数名，默认：limit
@@ -94,9 +96,24 @@
                 ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                 ,totalRow: true
                 ,defaultToolbar:['exports']
+                , done:function(res, curr, count){//用于合计数据取整数
+                    // var divArr = $(".layui-table-total div.layui-table-cell");
+                    // $.each(divArr,function (index,item) {
+                    //
+                    // });
+                    $(".layui-table-total div.layui-table-cell:eq(0)").html("合计")//抓取表格数据
+                    $(".layui-table-total div.layui-table-cell:eq(6)").html(res.sum.rent_money)//抓取表格数据
+                    $(".layui-table-total div.layui-table-cell:eq(7)").html(res.sum.area_rent_money)//抓取表格数据
+                    $(".layui-table-total div.layui-table-cell:eq(8)").html(res.sum.incidental_money)//抓取表格数据
+                    $(".layui-table-total div.layui-table-cell:eq(11)").html(res.sum.water_this_money)//抓取表格数据
+                    $(".layui-table-total div.layui-table-cell:eq(14)").html(res.sum.electric_this_money)//抓取表格数据
+                    $(".layui-table-total div.layui-table-cell:eq(16)").html(res.sum.sum)//抓取表格数据
+
+
+                }
                 ,cols:[[
                     // {type:'checkbox'},
-                    {field:'key',  title: '序号',sort: true,width:60,totalRowText: '合计'}
+                    {field:'key',  title: '序号',sort: true,width:60}
                     ,{field:'id',title:'Id',hide:true}
                     ,{field:'status',title:'状态',align:"center"}
                     ,{field:'pay_type',title:'支付类型',align:"center"}
@@ -111,6 +128,7 @@
                     ,{field:'electric_last_month', title: '上月电表度数',align:"center"}
                     ,{field:'electric_this_month', title: '本月电表度数',align:"center"}
                     ,{field:'electric_this_money', title: '电费',align:"center",totalRow: true}
+                    ,{field:'area_rant_ext',title:'其他费用',align:"center"}
                     ,{field:'sum_money', title: '总金额',align:"center",totalRow: true}
                     ,{field:'button',title:'操作',width:200, align:"center",totalRow: true}
                 ]]
