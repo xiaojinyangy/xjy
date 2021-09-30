@@ -23,7 +23,8 @@
         </form>
         <div>
             <a id="search" class="layui-btn searchBtn">搜索</a>
-            <a href="{{url('admin/shop_mouth/add')}}" class="layui-btn layui-btn-normal layui-btn-mini" lay-event="detail">添加</a>
+{{--            <a href="{{url('admin/shop_mouth/add')}}" class="layui-btn layui-btn-normal layui-btn-mini" lay-event="detail">添加</a>--}}
+            <a href="{{url('admin/users/index')}}" class="layui-btn layui-btn-normal layui-btn-mini">返回</a>
         </div>
     </div>
     <table class="layui-table-body" id="user_table" lay-filter="user_table"></table>
@@ -79,7 +80,6 @@
                     window.location.href = "{{url('admin/shop_mouth/set')}}" + '?id=' + data.id
                 }
                 if(obj.event == 'del'){
-                    return;
                     $.ajax({
                         url:"{{url('admin/users/user_shop')}}",
                         dataType:"json",

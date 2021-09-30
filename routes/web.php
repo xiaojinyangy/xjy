@@ -103,7 +103,7 @@ Route::namespace('Admin')->prefix('admin')->middleware('auths')->group(function 
      * 会员
      */
     Route::prefix('users')->group(function (){
-        Route::any('index', 'usersController@index');//用户列表 admin/users/index
+        Route::any('index', 'sersController@index');//用户列表 admin/users/index
         Route::any('info', 'usersController@Info');//用户详细 admin/users/info
         Route::post('del', 'usersController@del');//删除 admin/users/del
         Route::any('user_shop', 'userShopController@getUserShop');//用户的店铺 admin/users/user_shop

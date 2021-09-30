@@ -89,7 +89,6 @@
         })
 
         $("#search").click(function () {
-
             var phone = $("input[name=phone]").val();
             table.reload('user_table', {
                 url: "{{url('admin/users/index')}}",where: {phone:phone} //设定异步数据接口的额外参数
