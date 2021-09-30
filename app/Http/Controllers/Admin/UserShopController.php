@@ -54,14 +54,14 @@ class UserShopController extends  Controller
         if($this->Request->method() == "POST"){
             $data = $this->Request->post('data');
             $data =   Ajax_Arr($data);
-            $bool = $this->Model->where(['id'=>$id])->update($data);
+            $bool = $this->Model->query()->where('id',$id)->update($data);
             if($bool){
                 return rjson(200,'修改成功');
             }
             return rjson(0,'修改失败');
 
         }
-       $result =  $this->Model->index(['id',$id],2);
+       $result =  $this->Model->index(['shop.id'=>$id],2,[]);
         $area_model = new AreaModel();
         $area_list = $area_model->index()['data'];
         $mouth_model = new ShopMouthModel();
