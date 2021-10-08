@@ -184,7 +184,7 @@ class Webuploads
                 $id = $model->query()->insertGetId($data);
 			   $response = [
 			       'id' => $id,
-				    'filePaht'=>$this->filepath($uploadPath),//文件路径  相对路径
+				    'src'=>$this->filepath($uploadPath),//文件路径  相对路径
 			   ];
 			   return json_encode($response);
 		  }

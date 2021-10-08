@@ -16,7 +16,14 @@ class WebuploadsController extends Controller
         $file=$WebuploadsModel->upload($request);
         return $file;
     }
-    
+
+    public function load(Request $request)
+    {
+        $WebuploadsModel=new WebuploadsModel;
+        $file=$WebuploadsModel->upload($request);
+        $file = json_decode($file,true);
+        return rjson(0,'上传成功',$file);
+    }
     //删除文件
     public function del_file(Request $request)
     {   

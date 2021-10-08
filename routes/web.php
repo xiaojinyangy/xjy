@@ -204,5 +204,7 @@ Route::namespace('Admin')->prefix('admin')->middleware('auths')->group(function 
     Route::prefix('webuploads')->group(function () {
         Route::any('index', 'WebuploadsController@index');//上传文件 admin/webuploads/index
         Route::any('del_file', 'WebuploadsController@del_file');//删除文件 admin/webuploads/del_file
+        Route::any('load', 'WebuploadsController@load');//接口式上传文件 admin/webuploads/load
+
     });
 });

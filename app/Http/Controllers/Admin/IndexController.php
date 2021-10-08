@@ -3,6 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\JobModel;
+use App\Models\rantRecordModel;
+use App\Models\Shop;
+use App\Models\shopRantModel;
+use App\Models\User;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -67,16 +72,47 @@ class IndexController extends Controller
      
     //首页
     public function indexv1()
-    {   
-        $data     = [
-            'system'    => PHP_OS,
-            'webServer' => $_SERVER['SERVER_SOFTWARE'] ?? '',
-            'php'       => PHP_VERSION,
-            'mysql'     => DB::select('SHOW VARIABLES LIKE "version"')[0]->Value,
+    {
+        /** 用户总数 */
+        $user_model = new User();
+        $user_number = $user_model->query()->where('is_del',0)->count();
+        /**
+         * 员工总数
+         */
+        $job_model = new JobModel();
+        $job_number = $job_model->query()->count();
+
+        /**
+         * 店铺总数
+         */
+        $shop_model = new Shop();
+        $shop_number = $shop_model->query()->where('is_del',0)->count();
+        /**
+         * 日 缴费
+         */
+        $rant_model = new rantRecordModel();
+        $day_rant_money = $rant_model->query()->whereDate('create_time',date('Y-m-d'))->sum('money');
+
+        /** 月缴费 */
+        $rant_model = new rantRecordModel();
+        $thisMonth = date('Y-m-d',strtotime('first day of this month'));
+        $lastMonth =date('Y-m-d',strtotime('first day of +1 month'));
+        $month_rant_money =  $rant_model->query()->whereBetween('create_time',[$thisMonth,$lastMonth])->sum('money');
+
+        /** 总缴费 */
+        $rant_model = new rantRecordModel();
+        $rant_money_number = $rant_model->query()->sum('money');
+        $result = [
+            'user_number' => $user_number,
+            'job_number'  =>$job_number,
+            'shop_number' => $shop_number,
+            'day_rant_money' => $day_rant_money,
+            'month_rant_money' => $month_rant_money,
+            'rant_money_number'=>$rant_money_number
         ];
-        return view('admin.index.indexv1',$data);
+        return view('admin.index.indexv1',compact('result'));
     }
-    
+
     //修改密码
     public function editpass()
     {  

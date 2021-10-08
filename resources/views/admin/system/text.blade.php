@@ -14,6 +14,12 @@
     <script>
             layui.use('layedit', function(){
                 var layedit = layui.layedit;
+                layedit.set({
+                    uploadImage: {
+                        url: '{{url("admin/webuploads/load")}}' //接口url
+                        ,type: 'post' //默认post
+                    }
+                });
              var index =    layedit.build('demo'); //建立编辑器
                 $("#submit").click(function () {
                     var content = layedit.getContent(index);

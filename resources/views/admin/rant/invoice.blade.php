@@ -31,8 +31,8 @@
                 ,url: "{{url("admin/webuploads/index")}}" //上传接口
                 ,done: function(res){
                     //上传完毕回调
-                    $('#image').attr('src', res.filePaht); //图片链接（本地地址）
-                    $('#invoice').attr('value', res.filePaht); //图片id
+                    $('#image').attr('src', res.src); //图片链接（本地地址）
+                    $('#invoice').attr('value', res.id); //图片id
                     element.progress('demo', '100%'); //进度条复位
                     layer.msg('上传中', {icon: 16, time: 5});
                 }
