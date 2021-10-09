@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2021-09-24 16:25:16
+Date: 2021-10-08 15:54:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -38,7 +38,7 @@ CREATE TABLE `jh_admin` (
 -- ----------------------------
 -- Records of jh_admin
 -- ----------------------------
-INSERT INTO `jh_admin` VALUES ('1', 'admin', '$2y$10$ovnvcwrZQeh5ZmRTL4VeFe75OPjRpJEMGwIYDfhdNKt1.NBLrEMK.', '1', null, '1', '127.0.0.1', '127.0.0.1', '2021-09-18 14:22:48', '2021-09-18 13:53:01', null, '2021-09-18 14:22:48');
+INSERT INTO `jh_admin` VALUES ('1', 'admin', '$2y$10$ovnvcwrZQeh5ZmRTL4VeFe75OPjRpJEMGwIYDfhdNKt1.NBLrEMK.', '1', null, '1', '127.0.0.1', '127.0.0.1', '2021-10-08 14:05:15', '2021-10-08 10:49:01', null, '2021-10-08 14:05:15');
 INSERT INTO `jh_admin` VALUES ('2', '测试管理员', '$2y$10$QSIyqMWBvkvVar30sZhWqef/OlDv5Y1TZzRWb29.BVZ26GBRs3RnC', '2', '/uploads\\file_material\\1569832732c5199d31994f3d06.jpg', '1', '127.0.0.1', '127.0.0.1', null, null, '2019-09-30 08:38:58', '2019-10-12 05:43:09');
 
 -- ----------------------------
@@ -132,7 +132,7 @@ CREATE TABLE `jh_auth_groups` (
 -- ----------------------------
 -- Records of jh_auth_groups
 -- ----------------------------
-INSERT INTO `jh_auth_groups` VALUES ('1', '超级管理员组', '1', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,84,85,86,87,88,89,90,91,92,93,94,95', '1', null, '2021-09-17 17:42:11');
+INSERT INTO `jh_auth_groups` VALUES ('1', '超级管理员组', '1', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,84,85,86,87,88,89,90,91,92,93,94,95,96', '1', null, '2021-10-08 15:42:12');
 INSERT INTO `jh_auth_groups` VALUES ('2', '管理员组', '1', '1,2,3,4', '0', null, '2019-09-30 08:38:05');
 
 -- ----------------------------
@@ -172,7 +172,7 @@ CREATE TABLE `jh_auth_rules` (
   `updated_at` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`rule_id`),
   UNIQUE KEY `name` (`rule_url`)
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8mb4 COMMENT='后台权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8mb4 COMMENT='后台权限表';
 
 -- ----------------------------
 -- Records of jh_auth_rules
@@ -271,6 +271,7 @@ INSERT INTO `jh_auth_rules` VALUES ('92', '0', 'admin/shoprant', '缴费管理',
 INSERT INTO `jh_auth_rules` VALUES ('93', '92', 'admin/shoprant/index', '缴费列表', '1', null, '2021-09-17 16:22:08', '2021-09-17 16:22:08');
 INSERT INTO `jh_auth_rules` VALUES ('94', '92', 'admin/shoprant/surepay', '确认支付', '1', null, '2021-09-17 17:41:53', '2021-09-17 17:41:53');
 INSERT INTO `jh_auth_rules` VALUES ('95', '92', 'admin/shoprant/invoice', '上传发票', '1', null, '2021-09-17 17:42:11', '2021-09-17 17:42:11');
+INSERT INTO `jh_auth_rules` VALUES ('96', '79', 'admin/webuploads/load', '上传图片', '1', null, '2021-10-08 15:42:12', '2021-10-08 15:42:12');
 
 -- ----------------------------
 -- Table structure for jh_config
@@ -311,6 +312,26 @@ CREATE TABLE `jh_home_image` (
 INSERT INTO `jh_home_image` VALUES ('2', '145', '100', '1', '2021-09-16 17:04:34', '2021-09-16 17:04:34');
 
 -- ----------------------------
+-- Table structure for jh_hydropower_job
+-- ----------------------------
+DROP TABLE IF EXISTS `jh_hydropower_job`;
+CREATE TABLE `jh_hydropower_job` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `job_number` varchar(20) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `is_del` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='水电登记员工\r\n';
+
+-- ----------------------------
+-- Records of jh_hydropower_job
+-- ----------------------------
+INSERT INTO `jh_hydropower_job` VALUES ('1', '10086', '9e581571d9b003257b767f5ead300e09', null, '2021-09-30 11:49:54', null, null);
+
+-- ----------------------------
 -- Table structure for jh_job
 -- ----------------------------
 DROP TABLE IF EXISTS `jh_job`;
@@ -325,7 +346,7 @@ CREATE TABLE `jh_job` (
   `name` varchar(55) DEFAULT NULL,
   `phone` char(12) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COMMENT='员工列表';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COMMENT='缴费员工列表';
 
 -- ----------------------------
 -- Records of jh_job
@@ -410,6 +431,45 @@ INSERT INTO `jh_navs` VALUES ('33', '0', '缴费管理', 'admin/shoprant', '2021
 INSERT INTO `jh_navs` VALUES ('34', '33', '缴费列表', 'admin/shoprant/index', '2021-09-17 16:21:33', '2021-09-17 16:21:33', '255');
 
 -- ----------------------------
+-- Table structure for jh_rant_record
+-- ----------------------------
+DROP TABLE IF EXISTS `jh_rant_record`;
+CREATE TABLE `jh_rant_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `type` varchar(55) DEFAULT '' COMMENT '缴费类型',
+  `money` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='缴费记录表';
+
+-- ----------------------------
+-- Records of jh_rant_record
+-- ----------------------------
+INSERT INTO `jh_rant_record` VALUES ('1', '1000', '1', '100', '2021-10-08 12:01:08', '2021-10-08 12:01:14');
+INSERT INTO `jh_rant_record` VALUES ('2', '1000', '1', '150', '2021-10-08 14:50:59', '2021-10-08 14:51:02');
+INSERT INTO `jh_rant_record` VALUES ('3', '1000', '1', '50', '2021-09-30 14:51:52', '2021-10-08 14:51:54');
+
+-- ----------------------------
+-- Table structure for jh_remarks
+-- ----------------------------
+DROP TABLE IF EXISTS `jh_remarks`;
+CREATE TABLE `jh_remarks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL COMMENT '用户iid',
+  `title` varchar(255) DEFAULT NULL,
+  `remarks` varchar(255) DEFAULT NULL COMMENT '备注',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of jh_remarks
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for jh_shop_job
 -- ----------------------------
 DROP TABLE IF EXISTS `jh_shop_job`;
@@ -472,7 +532,7 @@ INSERT INTO `jh_shop_mouth` VALUES ('18', 'dasdasdas', '2021-09-09 11:30:03', '2
 -- ----------------------------
 DROP TABLE IF EXISTS `jh_shop_pay_rant`;
 CREATE TABLE `jh_shop_pay_rant` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `shop_id` int(11) DEFAULT NULL COMMENT '商铺id',
   `area_rant_ext_id` int(11) DEFAULT '0' COMMENT '附加费id',
@@ -487,12 +547,13 @@ CREATE TABLE `jh_shop_pay_rant` (
   `update_time` datetime DEFAULT NULL,
   `invoice` varchar(255) DEFAULT '' COMMENT '发票',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='缴费列表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='缴费列表';
 
 -- ----------------------------
 -- Records of jh_shop_pay_rant
 -- ----------------------------
-INSERT INTO `jh_shop_pay_rant` VALUES ('1', '1000', '1', '0', '0', '0', '2021', '9', '0', '1631872095', '0', '2021-09-17 18:20:39', '2021-09-17 15:23:29', '');
+INSERT INTO `jh_shop_pay_rant` VALUES ('1', '1000', '1', '0', '1', '1', '2021', '9', '0', '1632984570', '0', '2021-09-30 14:49:30', '2021-09-17 15:23:29', '');
+INSERT INTO `jh_shop_pay_rant` VALUES ('2', '1000', '1', '1', '0', '0', '2021', '9', '0', '1631872999', '0', '2021-09-30 15:13:24', '2021-09-30 15:13:26', '');
 
 -- ----------------------------
 -- Table structure for jh_system
@@ -525,7 +586,7 @@ CREATE TABLE `jh_up_image` (
   `created_at` datetime DEFAULT NULL COMMENT '上传时间',
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=149 DEFAULT CHARSET=utf8 COMMENT='资源表';
+) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=utf8 COMMENT='资源表';
 
 -- ----------------------------
 -- Records of jh_up_image
@@ -546,6 +607,11 @@ INSERT INTO `jh_up_image` VALUES ('145', '10545', '1', 'a135512cd688c135cda3980d
 INSERT INTO `jh_up_image` VALUES ('146', '33954', '1', '475256d48b9ee7ecbcb6ca5b95d92e46f90a6406.jpg', '\\uploads\\file_material\\20210917\\181538\\16318737384b1d224ea56bf3e9.jpg', 'jpg', '2021-09-17 18:15:38', null);
 INSERT INTO `jh_up_image` VALUES ('147', '33954', '1', '475256d48b9ee7ecbcb6ca5b95d92e46f90a6406.jpg', '\\uploads\\file_material\\20210917\\181845\\16318739254b1d224ea56bf3e9.jpg', 'jpg', '2021-09-17 18:18:45', null);
 INSERT INTO `jh_up_image` VALUES ('148', '10545', '1', 'a135512cd688c135cda3980de2e8be901997971e.jpg', '\\uploads\\file_material\\20210917\\182037\\1631874037ae3bfdb3aa74a1ba.jpg', 'jpg', '2021-09-17 18:20:37', null);
+INSERT INTO `jh_up_image` VALUES ('149', '2789', '1', 'd436d9373095ad52d09a39474e408989119abfe6.png', '\\uploads\\file_material\\20211008\\153902\\1633678742faa4e9730df3848c.png', 'png', '2021-10-08 15:39:02', null);
+INSERT INTO `jh_up_image` VALUES ('150', '2789', '1', 'd436d9373095ad52d09a39474e408989119abfe6.png', '\\uploads\\file_material\\20211008\\153912\\1633678752faa4e9730df3848c.png', 'png', '2021-10-08 15:39:12', null);
+INSERT INTO `jh_up_image` VALUES ('151', '2789', '1', 'd436d9373095ad52d09a39474e408989119abfe6.png', '\\uploads\\file_material\\20211008\\154230\\1633678950faa4e9730df3848c.png', 'png', '2021-10-08 15:42:30', null);
+INSERT INTO `jh_up_image` VALUES ('152', '2789', '1', 'd436d9373095ad52d09a39474e408989119abfe6.png', '\\uploads\\file_material\\20211008\\154243\\1633678963faa4e9730df3848c.png', 'png', '2021-10-08 15:42:43', null);
+INSERT INTO `jh_up_image` VALUES ('153', '2789', '1', 'd436d9373095ad52d09a39474e408989119abfe6.png', '\\uploads\\file_material\\20211008\\154426\\1633679066faa4e9730df3848c.png', 'png', '2021-10-08 15:44:26', null);
 
 -- ----------------------------
 -- Table structure for jh_users
@@ -616,12 +682,13 @@ CREATE TABLE `jh_user_shop` (
   `update_time` datetime DEFAULT NULL,
   `is_control` tinyint(1) DEFAULT '0' COMMENT '是否实际控制人 1=>是 0=>不是',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='商铺信息';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='商铺信息';
 
 -- ----------------------------
 -- Records of jh_user_shop
 -- ----------------------------
 INSERT INTO `jh_user_shop` VALUES ('1', '1000', '2', '2', 'xjy', '1', '187742655321', '54654213', '', '1', '小金羊', '18774265532', '0', '杭州', '0', '赚钱', '1', '0', '2021-09-10 18:09:33', '2021-09-10 18:30:47', '0');
+INSERT INTO `jh_user_shop` VALUES ('2', '1000', '1', '9', '肖金阳', '0', '187742665532', '431025200306150816', 'https://sfz.jpg', 'https://yyzz.jpg', '陈大志', '18075507762', '0', '', '0', '', '0', '0', '2021-09-28 14:01:46', '2021-09-29 16:42:34', '0');
 
 -- ----------------------------
 -- Table structure for jh_warte_electric_rant
@@ -642,11 +709,13 @@ CREATE TABLE `jh_warte_electric_rant` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   `is_del` tinyint(1) DEFAULT '0' COMMENT '是否删除',
+  `clear` tinyint(1) DEFAULT '4' COMMENT '清零位数',
+  `multiple` tinyint(1) DEFAULT '0' COMMENT '倍数',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='商铺 水电费';
 
 -- ----------------------------
 -- Records of jh_warte_electric_rant
 -- ----------------------------
-INSERT INTO `jh_warte_electric_rant` VALUES ('1', '1', '国基中心', '100.00', '150.00', '50.00', '75.00', '1', '0', '2021', '9', '2021-09-17 10:16:54', '2021-09-17 10:16:57', '0');
-INSERT INTO `jh_warte_electric_rant` VALUES ('2', '1', '国际中心', '50.00', '100.00', '50.00', '150.00', '2', '0', '2021', '9', '2021-09-17 10:18:12', '2021-09-17 10:18:15', '0');
+INSERT INTO `jh_warte_electric_rant` VALUES ('1', '1', '国基中心', '100.00', '150.00', '50.00', '75.00', '1', '0', '2021', '9', '2021-09-17 10:16:54', '2021-09-17 10:16:57', '0', '4', '0');
+INSERT INTO `jh_warte_electric_rant` VALUES ('2', '1', '国际中心', '50.00', '100.00', '50.00', '150.00', '2', '0', '2021', '9', '2021-09-17 10:18:12', '2021-09-17 10:18:15', '0', '4', '0');
