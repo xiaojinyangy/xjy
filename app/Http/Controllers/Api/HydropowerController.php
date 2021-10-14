@@ -38,6 +38,7 @@ class HydropowerController extends Controller
               $shop_id_array[] = $value->shop_id;
           }
       }
+        $where = [];
         $area_id = $this->request->post('area_id');
         if(!empty($area_id)){
             $where = ['shop.area_id'=>$area_id];
