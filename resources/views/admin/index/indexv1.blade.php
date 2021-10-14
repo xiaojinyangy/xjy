@@ -94,21 +94,4 @@
 @endsection
 <script type="text/javascript" src="/admin/js/vue.js"></script><!-- 选择按钮 -->
 <script>
-	var vue =  new Vue({
-		el:"vue",
-		delimiters : ['[[', ']]'],
-		data(){
-			return {
-				user_number:999,
-				job_number:999,
-				shop_name:999,
-				day_money:0,
-				month_money:1000,
-				sum_money:9999,
-			}
-		},
-		async created(){
-
-		}
-	 })
 </script>

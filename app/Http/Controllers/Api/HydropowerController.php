@@ -28,8 +28,10 @@ class HydropowerController extends Controller
      */
     public function index(){
         $shop_model= new \App\Models\Shop();
-        $year = date('Y');
-        $month = date('n');
+        $year = $this->request->post('year');
+        $month =  $this->request->post('month');
+        $year = isset($year) ? $year : date('Y');
+        $month = isset($month) ?  $month :date('n');
       $check_id =   $this->model->query()->where(['year'=>$year,'month'=>$month,'is_del'=>0])->select('shop_id')->get();
         $shop_id_array = [];
       if(!empty($check_id)){
