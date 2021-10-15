@@ -56,20 +56,20 @@ class HydropowerController extends Controller
                 $returnData[$key] =  ['id'=>$v['id'],'title'=>$v['area_name'].$v['mouth_name']];
                 foreach($v['rant'] as $value){
                     if($value['type'] == 2){
-                        $returnData[$key]['warte']['id'] = $value['id'];
-                        $returnData[$key]['warte']['shop_id'] = $value['shop_id'];
-                        $returnData[$key]['warte']['lastMonth']  = $value['last_month'];
-                        $returnData[$key]['warte']['nowMonth']  = $value['this_month'];
-                        $returnData[$key]['warte']['type']  = $value['multiple'];
-                        $returnData[$key]['warte']['clear']  = $value['clear'];
-                        $returnData[$key]['warte']['total']  = $value['money'];
+                        $returnData[$key]['warte'][]['id'] = $value['id'];
+                        $returnData[$key]['warte'][]['shop_id'] = $value['shop_id'];
+                        $returnData[$key]['warte'][]['lastMonth']  = $value['last_month'];
+                        $returnData[$key]['warte'][]['nowMonth']  = $value['this_month'];
+                        $returnData[$key]['warte'][]['type']  = $value['multiple'];
+                        $returnData[$key]['warte'][]['clear']  = $value['clear'];
+                        $returnData[$key]['warte'][]['total']  = $value['money'];
                     }else{
-                        $returnData[$key]['warte']['id'] = $value['id'];
-                        $returnData[$key]['warte']['shop_id'] = $value['shop_id'];
-                        $returnData[$key]['warte']['lastMonth']  = $value['last_month'];
-                        $returnData[$key]['warte']['nowMonth']  = $value['this_month'];
-                        $returnData[$key]['warte']['total']  = $value['money'];
-                        $returnData[$key]['warte']['clear']  = $value['clear'];
+                        $returnData[$key]['warte'][]['id'] = $value['id'];
+                        $returnData[$key]['warte'][]['shop_id'] = $value['shop_id'];
+                        $returnData[$key]['warte'][]['lastMonth']  = $value['last_month'];
+                        $returnData[$key]['warte'][]['nowMonth']  = $value['this_month'];
+                        $returnData[$key]['warte'][]['total']  = $value['money'];
+                        $returnData[$key]['warte'][]['clear']  = $value['clear'];
                 }
             }
             }
