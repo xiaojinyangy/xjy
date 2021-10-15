@@ -29,15 +29,16 @@ class Shop extends Base
             ->where($where)
             ->orderBy('shop.id','desc');
         if(array_key_exists('notin',$ext_where)){
-            $model = $model->whereNotIn($ext_where['notin'][0],$ext_where['notin'][1]);
+            $model = $model->whereIn($ext_where['notin'][0],$ext_where['notin'][1]);
         }
         //$with = [            "area" => function($query){$query->select(['id','area_name']);},
 //            "mouth"=>function($query){
 //                $query->select(['id',"mouth_name"]);
 //            }];
         if($state == 1 ){
-            $result = $model->paginate();
-            $result  =  getPaginateData($result);
+            $result = $model->get();
+
+          //  $result  =  getPaginateData($result);
         }else{
             $result = $model->first();
         }
