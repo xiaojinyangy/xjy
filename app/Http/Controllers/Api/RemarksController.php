@@ -17,7 +17,6 @@ class RemarksController extends Controller
     {
         $this->request = $request;
         $this->model = new RemarksModel();
-        $this->user_id = $request->get('id');
     }
 
     /**
@@ -25,8 +24,8 @@ class RemarksController extends Controller
      * @return array
      */
     public function view(){
-
-        $data =  $this->model->viewMyRemarks(['id'=>$this->user_id]);
+        $user_id = $this->request->get('id');
+        $data =  $this->model->viewMyRemarks(['id'=>$user_id]);
         return rjson(200,'加载成功',$data);
     }
 

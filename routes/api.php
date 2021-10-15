@@ -69,6 +69,7 @@ Route::namespace('Api')->prefix('api')->middleware('apiauths','throttle:60,1')->
         Route::post('index', 'UserController@index'); //个人中心 api/index/user/index
     });
 
+
     Route::prefix('shop')->group(function () {
         Route::post('job_apply', 'JobController@Apply'); //员工申请商铺  api/index/shop/index
         //Route::post('job_shop', 'JobController@job_shop'); //员工申请商铺  api/api/shop/job_shop
