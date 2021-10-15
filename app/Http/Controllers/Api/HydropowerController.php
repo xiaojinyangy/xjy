@@ -46,7 +46,7 @@ class HydropowerController extends Controller
         }
         $mouth_name = $this->request->post('mouth_name');
         if(!empty($mouth_name)){
-            $where[] = ['shop_mouth.mouth_name','like',"% $mouth_name%"];
+            $where[] = ['shop_mouth.mouth_name','like',"%$mouth_name%"];
         }
 
         $data = $shop_model->index($where,1,["notin"=>['shop.id',$shop_id_array]]);
