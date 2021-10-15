@@ -31,11 +31,12 @@ class RemarksController extends Controller
     }
 
     public function addRemarks(){
+        $user_id = $this->request->get('id');
         $remarks = $this->request->post('remarks');
         $title = $this->request->post('title');
         if(empty($title)) rjson(0,'请填写备注标题');
         if(empty($remarks)) rjson(0,'请填写备注');
-        $judge = $this->model->add(['remarks'=>$remarks]);
+        $judge = $this->model->add(['remarks'=>$remarks,'title'=>$title,'user_id'=>$user_id]);
         if($judge){
             return rjson(200,'添加成功');
         }
@@ -43,12 +44,13 @@ class RemarksController extends Controller
     }
 
     public function update(){
+        $user_id = $this->request->get('id');
         $id = $this->request->post('remarks_id');
         $title = $this->request->post('title');
         if(empty($title)) rjson(0,'请填写备注标题');
         $remarks = $this->request->post('remarks');
         if(empty($remarks)) rjson(0,'请填写备注');
-        $judge = $this->model->edit(['id'=>$id],['remarks'=>$remarks]);
+        $judge = $this->model->edit(['id'=>$id,'user_id'=>$user_id],['remarks'=>$remarks,'title'=>$title]);
         if($judge){
             return rjson(200,'修改成功');
         }
