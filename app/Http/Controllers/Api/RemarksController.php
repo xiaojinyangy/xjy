@@ -26,6 +26,12 @@ class RemarksController extends Controller
     public function view(){
         $user_id = $this->request->get('id');
         $data =  $this->model->viewMyRemarks(['user_id'=>$user_id]);
+        if(!empty($data)){
+            foreach($data['data'] as &$v){
+                $v['create_time'] = date('Y-m-d',strtotime($v['create_time']));
+            }
+        }
+
         return rjson(200,'加载成功',$data);
     }
 
