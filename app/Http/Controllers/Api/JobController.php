@@ -21,7 +21,7 @@ class JobController extends Controller
     public function areaMouth(){
         $model = new AreaModel();
         $mouthModel = new ShopMouthModel();
-       $code =  $this->request->post('code')
+       $code =  $this->request->post('code');
        $areaData =  $model->query()->where(['status'=>1],2)->select(['id','area_name'])->get()->toArray();
        if($code == 1){
                 return rjson(200,'请求成功',$areaData);
