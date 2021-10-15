@@ -58,14 +58,14 @@ class HydropowerController extends Controller
                     if($value['type'] == 2){
                         $returnData[$key]['water'][] = [
                             'id'=>$value['id'],'name'=>$value['title'],"lastMonth"=>$value['last_month'],
-                            "nowMonth"=> $value['this_month'],"type"=>$value['multiple'] > 0 ? "multiple" : "normal",
-                            "multiple"=>$value['multiple'],
-                            "clear"=> $value['clear'],"total"=>$value['money']
+                            "nowMonth"=> $value['this_month'],
+                            "clear"=> $value['clear'],
+                            "total"=>$value['money']
                         ];
                     }else{
                         $returnData[$key]['electric'][] = [
-                            'id'=>$value['id'],'name'=>$value['title'],"lastMonth"=>$value['last_month'],"type"=>"normal",
-                            "nowMonth"=> $value['this_month'], "clear"=> $value['clear'],"total"=>$value['money']
+                            'id'=>$value['id'],'name'=>$value['title'],"lastMonth"=>$value['last_month'],"type"=>$value['multiple'] > 0 ? "multiple" : "normal",
+                            "nowMonth"=> $value['this_month'], "clear"=> $value['clear'],"total"=>$value['money'],"multiple"=>$value['multiple']
                         ];
                 }
             }
