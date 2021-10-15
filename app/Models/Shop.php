@@ -18,9 +18,10 @@ class Shop extends Base
         $where['shop.is_del'] = 0;
         $model = $this->query()
             ->from('jh_user_shop as shop')
+            ->with('rant')
             ->leftJoin('jh_area as area','area.id','=','shop.area_id')
             ->leftJoin('jh_shop_mouth as shop_mouth','shop_mouth.id',"=","shop.mouth_id")
-            ->select(['shop.*','area.area_name','shop_mouth.mouth_name'])
+            ->select(['shop.*','area.area_name','shop_mouth.mouth_name',''])
             ->where($where)
             ->orderBy('shop.id','desc');
         if(array_key_exists('notin',$ext_where)){
@@ -52,5 +53,8 @@ class Shop extends Base
     }
     public function job(){
         return $this->hasMany(ShopJob::class,'shop_id','id');
+    }
+    public function rant(){
+        return $this->hasMany(HydropowerModel::class,'shop_id','id');
     }
 }

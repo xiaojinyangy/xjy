@@ -118,7 +118,7 @@ class LoginController extends Controller
        if(empty($check)){
            return rjson(0,'登录失败');
        }
-       return rjson(200,'登录成功');
+       return rjson(200,'登录成功',['token'=>$check,'user_info'=>$check_job]);
     }
 
     public function saveToken($userData){
