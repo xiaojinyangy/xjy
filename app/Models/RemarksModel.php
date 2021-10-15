@@ -20,7 +20,7 @@ class RemarksModel extends Base
         $data = $this->query()->where($where)
             ->orderBy('id','desc');
             if(empty($content)){
-                $data =  $data->where('title|remarks','like',"%$content%");
+                $data =  $data->where('remarks','like',"%$content%")->orWhere('title','like',"%$content%");
             }
         $data =  $data->select(['id','title','remarks','create_time'])->paginate($limit);
         $data =  getPaginateData($data);
