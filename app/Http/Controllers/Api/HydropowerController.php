@@ -56,22 +56,18 @@ class HydropowerController extends Controller
                 $returnData[$key] =  ['id'=>$v['id'],'title'=>$v['area_name'].$v['mouth_name']];
                 foreach($v['rant'] as $k=>$value){
                     if($value['type'] == 2){
-                        $returnData[$key]['warte'][$k]['id'] = $value['id'];
-                        $returnData[$key]['warte'][$k]['name'] = $value['title'];
-                        $returnData[$key]['warte'][$k]['shop_id'] = $value['shop_id'];
-                        $returnData[$key]['warte'][$k]['lastMonth']  = $value['last_month'];
-                        $returnData[$key]['warte'][$k]['nowMonth']  = $value['this_month'];
-                        $returnData[$key]['warte'][$k]['type']  = $value['multiple'];
-                        $returnData[$key]['warte'][$k]['clear']  = $value['clear'];
-                        $returnData[$key]['warte'][$k]['total']  = $value['money'];
+                        $returnData[$key]['warte'][] = [
+                            'id'=>$value['id'],'name'=>$value['title'],
+                            'shop_id' => $value['shop_id'],"lastMonth"=>$value['last_month'],
+                            "nowMonth"=> $value['this_month'],"type"=>$value['multiple'],
+                            "clear"=> $value['clear'],"total"=>$value['money']
+                        ];
                     }else{
-                        $returnData[$key]['electric'][$k]['id'] = $value['id'];
-                        $returnData[$key]['electric'][$k]['name'] = $value['title'];
-                        $returnData[$key]['electric'][$k]['shop_id'] = $value['shop_id'];
-                        $returnData[$key]['electric'][$k]['lastMonth']  = $value['last_month'];
-                        $returnData[$key]['electric'][$k]['nowMonth']  = $value['this_month'];
-                        $returnData[$key]['electric'][$k]['total']  = $value['money'];
-                        $returnData[$key]['electric'][$k]['clear']  = $value['clear'];
+                        $returnData[$key]['electric'][] = [
+                            'id'=>$value['id'],'name'=>$value['title'],
+                            'shop_id' => $value['shop_id'],"lastMonth"=>$value['last_month'],
+                            "nowMonth"=> $value['this_month'], "clear"=> $value['clear'],"total"=>$value['money']
+                        ];
                 }
             }
             }
