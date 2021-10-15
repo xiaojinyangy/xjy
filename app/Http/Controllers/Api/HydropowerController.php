@@ -57,6 +57,7 @@ class HydropowerController extends Controller
                 foreach($v['rant'] as $k=>$value){
                     if($value['type'] == 2){
                         $returnData[$key]['warte'][$k]['id'] = $value['id'];
+                        $returnData[$key]['warte'][$k]['name'] = $value['title'];
                         $returnData[$key]['warte'][$k]['shop_id'] = $value['shop_id'];
                         $returnData[$key]['warte'][$k]['lastMonth']  = $value['last_month'];
                         $returnData[$key]['warte'][$k]['nowMonth']  = $value['this_month'];
@@ -65,6 +66,7 @@ class HydropowerController extends Controller
                         $returnData[$key]['warte'][$k]['total']  = $value['money'];
                     }else{
                         $returnData[$key]['electric'][$k]['id'] = $value['id'];
+                        $returnData[$key]['electric'][$k]['name'] = $value['title'];
                         $returnData[$key]['electric'][$k]['shop_id'] = $value['shop_id'];
                         $returnData[$key]['electric'][$k]['lastMonth']  = $value['last_month'];
                         $returnData[$key]['electric'][$k]['nowMonth']  = $value['this_month'];
