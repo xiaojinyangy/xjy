@@ -53,19 +53,17 @@ class HydropowerController extends Controller
         $returnData = [];
         if(!empty($data)){
             foreach($data as $key=>$v){
-                $returnData[$key] =  ['id'=>$v['id'],'title'=>$v['area_name'].$v['mouth_name']];
+                $returnData[$key] =  ['id'=>$v['id'],'title'=>$v['area_name'].$v['mouth_name'],$v['shop_id']];
                 foreach($v['rant'] as $k=>$value){
                     if($value['type'] == 2){
                         $returnData[$key]['water'][] = [
-                            'id'=>$value['id'],'name'=>$value['title'],
-                            'shop_id' => $value['shop_id'],"lastMonth"=>$value['last_month'],
+                            'id'=>$value['id'],'name'=>$value['title'],"lastMonth"=>$value['last_month'],
                             "nowMonth"=> $value['this_month'],"type"=>$value['multiple'],
                             "clear"=> $value['clear'],"total"=>$value['money']
                         ];
                     }else{
                         $returnData[$key]['electric'][] = [
-                            'id'=>$value['id'],'name'=>$value['title'],
-                            'shop_id' => $value['shop_id'],"lastMonth"=>$value['last_month'],
+                            'id'=>$value['id'],'name'=>$value['title'],"lastMonth"=>$value['last_month'],
                             "nowMonth"=> $value['this_month'], "clear"=> $value['clear'],"total"=>$value['money']
                         ];
                 }
