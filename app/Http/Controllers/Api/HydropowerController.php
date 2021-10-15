@@ -59,6 +59,7 @@ class HydropowerController extends Controller
                         $returnData[$key]['water'][] = [
                             'id'=>$value['id'],'name'=>$value['title'],"lastMonth"=>$value['last_month'],
                             "nowMonth"=> $value['this_month'],"type"=>$value['multiple'] > 0 ? "multiple" : "multiple",
+                            "multiple"=>$value['multiple'],
                             "clear"=> $value['clear'],"total"=>$value['money']
                         ];
                     }else{
