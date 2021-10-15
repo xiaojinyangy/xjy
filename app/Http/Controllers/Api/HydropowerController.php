@@ -56,7 +56,7 @@ class HydropowerController extends Controller
                 $returnData[$key] =  ['id'=>$v['id'],'title'=>$v['area_name'].$v['mouth_name']];
                 foreach($v['rant'] as $k=>$value){
                     if($value['type'] == 2){
-                        $returnData[$key]['warte'][] = [
+                        $returnData[$key]['water'][] = [
                             'id'=>$value['id'],'name'=>$value['title'],
                             'shop_id' => $value['shop_id'],"lastMonth"=>$value['last_month'],
                             "nowMonth"=> $value['this_month'],"type"=>$value['multiple'],
