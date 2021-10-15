@@ -108,9 +108,9 @@ class LoginController extends Controller
         $password = $request->post('pass');
         $model = new RecordJobModel();
        $check_job =  $model->index(['job_number'=>$job_number],2);
-       if(empty($check_job)) return rjson('工号不存在');
+       if(empty($check_job)) return rjson(0,'工号不存在');
         $password =  md5(md5($password).config('appConfig.passKey'));
-       if($check_job->password !=  $password ) return rjson('密码错误');
+       if($check_job->password !=  $password ) return rjson(0,'密码错误');
        if(isset($check_job->user_id)){
            $model->update(['job_number'=>$job_number],['user_id'=>$user_id]);
        }
@@ -118,7 +118,7 @@ class LoginController extends Controller
        if(empty($check)){
            return rjson(0,'登录失败');
        }
-       return rjson(200,'登录成功',['token'=>$check,'user_info'=>$check_job]);
+       return rjson(200,'登录成功',['token'=>$check,'user_info'=>['job_number'=>$check_job->job_number]]);
     }
 
     public function saveToken($userData){

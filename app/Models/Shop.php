@@ -21,7 +21,7 @@ class Shop extends Base
             ->with('rant')
             ->leftJoin('jh_area as area','area.id','=','shop.area_id')
             ->leftJoin('jh_shop_mouth as shop_mouth','shop_mouth.id',"=","shop.mouth_id")
-            ->select(['shop.*','area.area_name','shop_mouth.mouth_name',''])
+            ->select(['shop.*','area.area_name','shop_mouth.mouth_name'])
             ->where($where)
             ->orderBy('shop.id','desc');
         if(array_key_exists('notin',$ext_where)){
