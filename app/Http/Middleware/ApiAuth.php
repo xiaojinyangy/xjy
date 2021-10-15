@@ -29,20 +29,25 @@ class ApiAuth
 
         $Tokens=new Tokens;
         $row=$Tokens->check($token);
+
         $checkRow = $Tokens->checkLogin($token);
-        if($row['code']!=1 &&  $checkRow['code'] != 1){
+
+        if($row['code']!=1  &&  $checkRow['code'] != 1){
              throw new HttpResponseException(response()->json(['code'=>10,'msg'=>$row['msg']]));
         }
         unset($Tokens);
         
         //自行判断强制需要的参数
-        if(!isset($row['row']['user_id'])||empty($row['row']['user_id'])){
+
+        if(!isset($row['row']['user_id'])&&!isset($checkRow['row']['id'])){
              throw new HttpResponseException(response()->json(['code'=>10,'msg'=>'验证错误！']));
         }
-
         //赋值到请求请求头里面
-        $request->attributes->add($row['row']);
-
+        if(isset($checkRow['row']['id'])){
+            $request->attributes->add($checkRow['row']);
+        }else if(isset($row['row']['user_id'])){
+            $request->attributes->add($row['row']);
+        }
         return $next($request);
     }
 }

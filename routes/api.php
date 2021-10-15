@@ -57,18 +57,7 @@ Route::namespace('Api')->prefix('api')->middleware('throttle:60,1')->group(funct
 
 
     });
-    Route::prefix('remarks')->group(function () {
-        Route::post('index','RemarksController@view');  //我的备注  api/api/remarks/index
-        Route::post('add', 'Remarks@addRemarks'); //添加备注  api/api/remarks/add
-        Route::post('set', 'RemarksController@update'); //修改备注  api/api/remarks/set
-        Route::post('del', 'RemarksController@delRemarks'); //删除备注  api/api/remarks/del
-    });
-    Route::prefix('hydropower')->group(function () {
-        Route::post('index','HydropowerController@index');  //水电登记表首页  api/api/hydropower/index
-        Route::post('add', 'HydropowerController@addTable'); //添加水电表  api/api/hydropower/add
-        Route::post('set', 'HydropowerController@set'); //修改内容  api/api/hydropower/set
-        Route::post('record', 'HydropowerController@record'); //历史记录  api/api/hydropower/record
-    });
+
 });
 
 
@@ -84,5 +73,16 @@ Route::namespace('Api')->prefix('api')->middleware('apiauths','throttle:60,1')->
         Route::post('job_apply', 'JobController@Apply'); //员工申请商铺  api/index/shop/index
         //Route::post('job_shop', 'JobController@job_shop'); //员工申请商铺  api/api/shop/job_shop
     });
-    
+    Route::prefix('remarks')->group(function () {
+        Route::post('index','RemarksController@view');  //我的备注  api/api/remarks/index
+        Route::post('add', 'RemarksController@addRemarks'); //添加备注  api/api/remarks/add
+        Route::post('set', 'RemarksController@update'); //修改备注  api/api/remarks/set
+        Route::post('del', 'RemarksController@delRemarks'); //删除备注  api/api/remarks/del
+    });
+    Route::prefix('hydropower')->group(function () {
+        Route::post('index','HydropowerController@index');  //水电登记表首页  api/api/hydropower/index
+        Route::post('add', 'HydropowerController@addTable'); //添加水电表  api/api/hydropower/add
+        Route::post('set', 'HydropowerController@set'); //修改内容  api/api/hydropower/set
+        Route::post('record', 'HydropowerController@record'); //历史记录  api/api/hydropower/record
+    });
 });

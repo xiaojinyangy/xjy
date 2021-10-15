@@ -51,8 +51,15 @@ class HydropowerController extends Controller
         $data = $shop_model->index($where,1,["notin"=>['shop.id',$shop_id_array]]);
         $returnData = [];
         if(!empty($data['data'])){
-            foreach($data['data'] as $v){
-                $returnData[] =  ['id'=>$v['id'],'title'=>$v['area_name'].$v['mouth_name'],"list"=>$v['rant']];
+            foreach($data['data'] as $key=>$v){
+                $returnData[$key] =  ['id'=>$v['id'],'title'=>$v['area_name'].$v['mouth_name']];
+                foreach($v['rant'] as $value){
+                    if($value['type'] == 2){
+                        $returnData[$key]['warte'][]  = $value;
+                    }else{
+                        $returnData[$key]['electric'][] = $value;
+                }
+            }
             }
         }
         $mouth_model = new ShopMouthModel();
