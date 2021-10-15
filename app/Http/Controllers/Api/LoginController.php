@@ -110,7 +110,7 @@ class LoginController extends Controller
        $check_job =  $model->index(['job_number'=>$job_number],2);
        if(empty($check_job)) return rjson(0,'工号不存在');
         $password =  md5(md5($password).config('appConfig.passKey'));
-       if($check_job->password !=  $password ) return rjson(0,'密码错误');
+       if($check_job->password !=  $password ) return rjson(0,'账号或密码错误');
        if(isset($check_job->user_id)){
            $model->update(['job_number'=>$job_number],['user_id'=>$user_id]);
        }

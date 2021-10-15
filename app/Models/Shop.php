@@ -16,9 +16,13 @@ class Shop extends Base
 
     public function index($where=[],$state= 1,$ext_where=[]){
         $where['shop.is_del'] = 0;
+        $Year =date('Y');
+        $month = date('n');
         $model = $this->query()
             ->from('jh_user_shop as shop')
-            ->with('rant')
+            ->with(['rant'=>function ($query)use($Year,$month){
+                $query->select(['shop_id','title','last_month','this_month','this_number','money','type','clear'])->where(['year'=>$Year,'month'=>$month,'status'=>0,'is_del'=>0]);
+            }])
             ->leftJoin('jh_area as area','area.id','=','shop.area_id')
             ->leftJoin('jh_shop_mouth as shop_mouth','shop_mouth.id',"=","shop.mouth_id")
             ->select(['shop.*','area.area_name','shop_mouth.mouth_name'])

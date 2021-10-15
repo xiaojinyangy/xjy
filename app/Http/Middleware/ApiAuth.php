@@ -18,7 +18,10 @@ class ApiAuth
      * @return mixed
     */
     public function handle($request, Closure $next)
-    {   
+    {
+
+
+
         $token=$request->header('token');
         if(empty($token)){
              throw new HttpResponseException(response()->json(['code'=>10,'msg'=>'参数错误！']));
