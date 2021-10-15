@@ -20,7 +20,7 @@ Route::namespace('Api')->prefix('api')->middleware('throttle:60,1')->group(funct
     Route::prefix('login')->group(function () {
         Route::post('login', 'LoginController@login'); //授权登录 api/api/login/login
 
-        Route::post('pass_login', 'LoginController@passLogin'); //员工端登录 api/api/login/passLogin
+        Route::post('pass_login', 'LoginController@passLogin'); //员工端登录 api/api/login/pass_login
         Route::post('out', 'LoginController@loginOut'); //退出 api/api/login/out
         Route::post('phone', 'LoginController@getUserPhone'); //手机号授权 api/api/login/phone
 
@@ -54,8 +54,6 @@ Route::namespace('Api')->prefix('api')->middleware('throttle:60,1')->group(funct
         Route::post('agree','shopController@agree');//同意员工申请 api/api/shop/agree
         Route::post('refuse','shopController@refuse');//拒绝员工申请 api/api/shop/refuse
         Route::post('remove','shopController@remove');//移除员工申请 api/api/shop/remove
-
-
     });
 
 });
