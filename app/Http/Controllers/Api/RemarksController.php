@@ -51,6 +51,8 @@ class RemarksController extends Controller
         $remarks = $this->request->post('remarks');
         if(empty($remarks)) rjson(0,'请填写备注');
         $judge = $this->model->edit(['id'=>$id,'user_id'=>$user_id],['remarks'=>$remarks,'title'=>$title]);
+
+
         if($judge){
             return rjson(200,'修改成功');
         }

@@ -27,7 +27,6 @@ class shopController extends Controller
      */
     public function  userShop(){
         $user_id = $this->request->get('id');
-        $user_id =1000;
         $user_model = new User();
         $userInfo =  $user_model->query()->find($user_id);
         $result =   $this->model->query()->from('jh_user_shop as a')
