@@ -22,7 +22,7 @@ class RemarksModel extends Base
             if(empty($content)){
                 $data =  $data->where('remarks','like',"%$content%");
             }
-        $data->select(['id','title','remarks','create_time'])->paginate($limit);
+        $data->select(['id','title','remarks','create_time'])->paginate();
         $data =  getPaginateData($data);
         return $data;
     }
