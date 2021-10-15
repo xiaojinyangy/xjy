@@ -25,7 +25,15 @@ class RemarksController extends Controller
      */
     public function view(){
         $user_id = $this->request->get('id');
-        $data =  $this->model->viewMyRemarks(['user_id'=>$user_id]);
+        $content = $this->request->post('content');
+        $limit = $this->request->post('limit');
+        if(empty($limit)){
+            $limit = 15;
+        }
+        if(empty($content)){
+            $content = '';
+        }
+        $data =  $this->model->viewMyRemarks(['user_id'=>$user_id],$limit,$content);
         if(!empty($data)){
             foreach($data['data'] as &$v){
                 $v['create_time'] = date('Y-m-d',strtotime($v['create_time']));

@@ -16,10 +16,13 @@ class RemarksModel extends Base
      * @param $where
      * @return array|\Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function viewMyRemarks($where){
+    public function viewMyRemarks($where,$limit,$content=''){
         $data = $this->query()->where($where)
-            ->orderBy('id','desc')
-            ->select(['id','title','remarks','create_time'])->paginate();
+            ->orderBy('id','desc');
+            if(empty($content)){
+                $data =  $data->where('remarks','like',"%$content%");
+            }
+        $data->select(['id','title','remarks','create_time'])->paginate($limit);
         $data =  getPaginateData($data);
         return $data;
     }
