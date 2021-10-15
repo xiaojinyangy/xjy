@@ -25,7 +25,7 @@ class RemarksController extends Controller
      */
     public function view(){
         $user_id = $this->request->get('id');
-        $data =  $this->model->viewMyRemarks(['id'=>$user_id]);
+        $data =  $this->model->viewMyRemarks(['user_id'=>$user_id]);
         return rjson(200,'加载成功',$data);
     }
 
