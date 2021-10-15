@@ -127,7 +127,7 @@ class LoginController extends Controller
             $Pwds = new Pwds('guangzhouzhengjiehuodong');
             $redis = linkRedis(1);
             $userData->ip = $Tokens->get_real_ip();
-            $token  = $Pwds->encrypt($userData);
+            $token  = $Pwds->encrypt($userData->toArray());
             $redis->setex($token,60*60*24*7,$userData);
             return $token;
         }else{
