@@ -21,7 +21,7 @@ class Shop extends Base
         $model = $this->query()
             ->from('jh_user_shop as shop')
             ->with(['rant'=>function ($query)use($Year,$month){
-                $query->select(['id','shop_id','title','last_month','this_month','this_number','money','type','clear'])->where(['year'=>$Year,'status'=>0,'is_del'=>0]);
+                $query->select(['id','shop_id','title','last_month','this_month','this_number','money','type','clear','multiple'])->where(['year'=>$Year,'status'=>0,'is_del'=>0]);
             }])
             ->leftJoin('jh_area as area','area.id','=','shop.area_id')
             ->leftJoin('jh_shop_mouth as shop_mouth','shop_mouth.id',"=","shop.mouth_id")
@@ -31,6 +31,7 @@ class Shop extends Base
         if(array_key_exists('notin',$ext_where)){
             $model = $model->whereIn($ext_where['notin'][0],$ext_where['notin'][1]);
         }
+
         //$with = [            "area" => function($query){$query->select(['id','area_name']);},
 //            "mouth"=>function($query){
 //                $query->select(['id',"mouth_name"]);
