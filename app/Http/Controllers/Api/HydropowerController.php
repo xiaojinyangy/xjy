@@ -162,12 +162,12 @@ class HydropowerController extends Controller
                 if(array_key_exists($time,$returnData)){
                     if(array_key_exists($value->shop_id,$returnData[$time])){
                         if($value->type == 1){
-                            $returnData[$time][$value->shop_id]['electricity_number'] = bcadd($returnData[$time][$value->shop_id]['electricity_number'],$value->this_number,2);
+                            $returnData[$time][$value->shop_id]['electricity_number'] = bcadd($returnData[$time][$value->shop_id]['electricity_number'],$value->this_number,0);
                             array_push($returnData[$time][$value->shop_id]['electricity'],[
                                 $value->title,$value->last_month,$value->this_month,$value->this_number
                             ]);
                         }else{
-                            $returnData[$time][$value->shop_id]['water_number'] = bcadd($returnData[$time][$value->shop_id]['water_number'],$value->this_number,2);
+                            $returnData[$time][$value->shop_id]['water_number'] = bcadd($returnData[$time][$value->shop_id]['water_number'],$value->this_number,0);
                             array_push($returnData[$time][$value->shop_id]['water'],[
                                 $value->title,$value->last_month,$value->this_month,$value->this_number
                             ]);
