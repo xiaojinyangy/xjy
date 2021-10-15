@@ -113,8 +113,13 @@ class HydropowerController extends Controller
      * @return array
      */
     public function record(){
+        $user_id = $this->request->input();
+        $where = [];
         $area_id = $this->request->post('area_id');
-        $where = ['area.id'=>$area_id];
+      if(!empty($area_id)){
+          $where['area.id'] = $area_id;
+      }
+
 
        $model  =  $this->model->query()->from('jh_warte_electric_rant as a')
             ->leftJoin('jh_user_shop as b','b.id','a.shop_id')
