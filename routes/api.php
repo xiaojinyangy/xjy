@@ -20,7 +20,7 @@ Route::namespace('Api')->prefix('api')->middleware('throttle:60,1')->group(funct
     Route::prefix('login')->group(function () {
         Route::post('login', 'LoginController@login'); //授权登录 api/api/login/login
 
-        Route::post('pass_login', 'LoginController@passLogin'); //员工端登录 api/api/login/passLogin
+        Route::post('pass_login', 'LoginController@passLogin'); //员工端登录 api/api/login/pass_login
         Route::post('out', 'LoginController@loginOut'); //退出 api/api/login/out
         Route::post('phone', 'LoginController@getUserPhone'); //手机号授权 api/api/login/phone
 
@@ -59,7 +59,7 @@ Route::namespace('Api')->prefix('api')->middleware('throttle:60,1')->group(funct
     });
     Route::prefix('remarks')->group(function () {
         Route::post('index','RemarksController@view');  //我的备注  api/api/remarks/index
-        Route::post('add', 'Remarks@addRemarks'); //添加备注  api/api/remarks/add
+        Route::post('add', 'RemarksController@addRemarks'); //添加备注  api/api/remarks/add
         Route::post('set', 'RemarksController@update'); //修改备注  api/api/remarks/set
         Route::post('del', 'RemarksController@delRemarks'); //删除备注  api/api/remarks/del
     });
