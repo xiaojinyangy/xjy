@@ -9,6 +9,7 @@ use App\Http\Requests\index\shop;
 use App\Models\AreaModel;
 use App\Models\HydropowerModel;
 use App\Models\ShopMouthModel;
+use Dotenv\Environment\DotenvVariables;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\PostDec;
 
@@ -50,7 +51,7 @@ class HydropowerController extends Controller
 
         $data = $shop_model->index($where,1,["notin"=>['shop.id',$shop_id_array]]);
         $returnData = [];
-        if(!empty($data['data'])){
+        if(!empty($data)){
             foreach($data['data'] as $key=>$v){
                 $returnData[$key] =  ['id'=>$v['id'],'title'=>$v['area_name'].$v['mouth_name']];
                 foreach($v['rant'] as $value){
