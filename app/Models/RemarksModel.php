@@ -19,7 +19,7 @@ class RemarksModel extends Base
     public function viewMyRemarks($where,$limit,$content=''){
         $data = $this->query()->where($where)
             ->orderBy('id','desc');
-            if(empty($content)){
+            if(!empty($content)){
                 $data =  $data->where('remarks','like',"%$content%")->orWhere('title','like',"%$content%");
             }
         $data =  $data->select(['id','title','remarks','create_time'])->paginate($limit);
