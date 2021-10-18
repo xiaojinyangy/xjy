@@ -289,7 +289,10 @@ class HydropowerController extends Controller
                     $returnData[$time][$value->shop_id]['electricity_number'] = $value->this_number; //电
                     $returnData[$time][$value->shop_id]['water_number'] = 0;//水
                     $returnData[$time][$value->shop_id]['electricity'][] = [
-                        $value->title,$value->last_month,$value->this_month,$value->this_number
+                        "name"=>$value->title,
+                        "lastMonth"=>$value->last_month,
+                        "nowMonth"=>$value->this_month,
+                        "total"=>bcadd($value->this_number,0,2)
                     ];
                     $returnData[$time][$value->shop_id]['water'] = [];
                 }else{
@@ -297,7 +300,10 @@ class HydropowerController extends Controller
                     $returnData[$time][$value->shop_id]['water_number'] = $value->this_number;//水
                     $returnData[$time][$value->shop_id]['electricity_number'] = 0;//电
                     $returnData[$time][$value->shop_id]['water'][] = [
-                        $value->title,$value->last_month,$value->this_month,$value->this_number
+                        "name"=>$value->title,
+                        "lastMonth"=>$value->last_month,
+                        "nowMonth"=>$value->this_month,
+                        "total"=>bcadd($value->this_number,0,2)
                     ];
                     $returnData[$time][$value->shop_id]['electricity'] = [];
                 }
