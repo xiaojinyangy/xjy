@@ -16,7 +16,6 @@ return [
     | all methods / origins / headers are allowed.
     |
     */
-
     /*
      * You can enable CORS for 1 or multiple paths.
      * Example: ['api/*']
