@@ -249,7 +249,7 @@ class HydropowerController extends Controller
         }
         $result = $model
             ->select([
-                'a.shop_id','a.title','a.last_month','a.this_month','a.this_number','a.money',
+                'a.shop_id','a.title','a.last_month','a.this_month','a.this_number','a.money','area.area_name',
                 'shop_mouth.mouth_name','a.type','a.create_time','a.month','a.year','a.multiple'
                 ])->paginate();
         $result = getPaginateData($result);
@@ -282,6 +282,8 @@ class HydropowerController extends Controller
                 /**
                  * 第一个数据的值作为公共值
                  */
+
+                $returnData[$time][$value->shop_id]['area_name']  =$value->area_name;
                 $returnData[$time][$value->shop_id]['mouth_name'] = $value->mouth_name;
                 $returnData[$time][$value->shop_id]['time']  = $time;
                 if($value->type == 1 ){
