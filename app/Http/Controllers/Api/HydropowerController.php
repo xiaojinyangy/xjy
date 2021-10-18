@@ -200,9 +200,12 @@ class HydropowerController extends Controller
                     }
              }
             }
-            var_dump($waterInsertData);
-            if(!empty($insertData)){
+
+            if(!empty($waterInsertData)){
                 $this->model->query()->insert($waterInsertData);
+
+            }
+            if(!empty($electricInsertData)){
                 $this->model->query()->insert($electricInsertData);
             }
             return rjson(200,'保存成功');
