@@ -115,13 +115,12 @@ class HydropowerController extends Controller
         $hy_id = $this->request->post('hy_id');
         $electricArray = $this->request->post('electric');
         $waterArray = $this->request->post('water');
-        var_dump($waterArray);
        // $electricArray =  "[{\"id\":5,\"name\":\"A701\",\"lastMonth\":200,\"type\":\"normal\",\"nowMonth\":300,\"clear\":4,\"total\":100,\"multiple\":0},{\"id\":6,\"name\":\"A708\",\"lastMonth\":200,\"type\":\"multiple\",\"nowMonth\":299,\"clear\":4,\"total\":100,\"multiple\":1},{\"name\":\"a008\",\"lastMonth\":\"100\",\"nowMonth\":\"300\",\"total\":\"400.00\",\"type\":\"multiple\",\"multiple\":\"2\",\"clear\":\"4\"}]";
        // $hy_id = 2;
        // $waterArray =  "[{\"id\":3,\"name\":\"尘世中心\",\"lastMonth\":90,\"nowMonth\":50,\"clear\":4,\"total\":7},{\"id\":7,\"name\":\"A709\",\"lastMonth\":300,\"nowMonth\":1000,\"clear\":4,\"total\":1500},{\"name\":\"a009\",\"lastMonth\":\"200\",\"nowMonth\":\"300\",\"total\":\"100.00\",\"clear\":\"4\"}]";
         $electricArray = json_decode($electricArray,true);
         $waterArray = json_decode($waterArray,true);
-        var_dump($waterArray);
+
         $waterInsertData = [];
         $electricInsertData = [];
         //公共数据
@@ -201,6 +200,7 @@ class HydropowerController extends Controller
                     }
              }
             }
+            var_dump($waterInsertData);
             if(!empty($insertData)){
                 $this->model->query()->insert($waterInsertData);
                 $this->model->query()->insert($electricInsertData);
