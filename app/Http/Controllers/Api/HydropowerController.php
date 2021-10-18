@@ -83,6 +83,7 @@ class HydropowerController extends Controller
        $user_id =  $this->request->get('id');
         $shop_id = $this->request->post('shop_id');
         $title =  $this->request->post('title');
+
         $multiple =  $this->request->post('multiple'); //为0的时候 是普通类型\
         $clear =  $this->request->post('clear');//默认4位
         $type = $this->request->post('type');//1 =>电  2=>水
@@ -107,9 +108,14 @@ class HydropowerController extends Controller
      * @return array
      */
     public function set(){
+        /**
+         * 添加和 修改  分段数据处理
+         */
         $user_id = $this->request->get('id');
         $hy_id = $this->request->post('hy_id');
-        $parms = $this->request->post('.post');
+        $parms = $this->request->post('json_data');
+        $data = json_decode($parms,true);
+
         $judge = $this->model->edit(['id'=>$hy_id],$parms);
         if($judge){
             return rjson(200,'修改成功');
@@ -128,7 +134,6 @@ class HydropowerController extends Controller
       if(!empty($area_id)){
           $where['area.id'] = $area_id;
       }
-
 
        $model  =  $this->model->query()->from('jh_warte_electric_rant as a')
             ->leftJoin('jh_user_shop as b','b.id','a.shop_id')
@@ -206,5 +211,18 @@ class HydropowerController extends Controller
         }
 
         return rjson(200,'加载成功',$returnData);
+    }
+
+    public function del(){
+        $hy_id = $this->request->post('id');
+        if(empty($hy_id)){
+            return rjson(0,'网络异常刷新重试');
+        }
+        $model = new HydropowerModel();
+        $bool = $model->where('id',$hy_id)->update(['is_del'=>1]);
+        if($bool){
+            return rjson(200,'删除成功');
+        }
+        return rjson(0,'删除失败');
     }
 }

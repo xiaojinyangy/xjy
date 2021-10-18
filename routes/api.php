@@ -83,5 +83,6 @@ Route::namespace('Api')->prefix('api')->middleware('apiauths','throttle:60,1')->
         Route::post('add', 'HydropowerController@addTable'); //添加水电表  api/api/hydropower/add
         Route::post('set', 'HydropowerController@set'); //修改内容  api/api/hydropower/set
         Route::post('record', 'HydropowerController@record'); //历史记录  api/api/hydropower/record
+        Route::post('del', 'HydropowerController@del'); //软删除  api/api/hydropower/del
     });
 });
