@@ -53,19 +53,19 @@ class HydropowerController extends Controller
         $returnData = [];
         if(!empty($data)){
             foreach($data as $key=>$v){
-                $returnData[$key] =  ['id'=>$v['id'],'title'=>$v['area_name'].$v['mouth_name']];
+                $returnData[$key] =  ['id'=>$v['id'],'area_name'=>$v['area_name'],'mouth_name'=>$v['mouth_name']];
                 foreach($v['rant'] as $k=>$value){
                     if($value['type'] == 2){
                         $returnData[$key]['water'][] = [
                             'id'=>$value['id'],'name'=>$value['title'],"lastMonth"=>$value['last_month'],
                             "nowMonth"=> $value['this_month'],
                             "clear"=> $value['clear'],
-                            "total"=>$value['money']
+                            "total"=>bcadd($value['this_number'],0,2)
                         ];
                     }else{
                         $returnData[$key]['electric'][] = [
                             'id'=>$value['id'],'name'=>$value['title'],"lastMonth"=>$value['last_month'],"type"=>$value['multiple'] > 0 ? "multiple" : "normal",
-                            "nowMonth"=> $value['this_month'], "clear"=> $value['clear'],"total"=>$value['money'],"multiple"=>$value['multiple']
+                            "nowMonth"=> $value['this_month'], "clear"=> $value['clear'],"total"=>bcadd($value['this_number'],0,2),"multiple"=>$value['multiple']
                         ];
                 }
             }
@@ -178,7 +178,7 @@ class HydropowerController extends Controller
                             'this_number'=>bcsub($v['nowMonth'],$v['lastMonth'],2),
                             'clear' => $v['clear'],
                             'money'  => $v['total'],
-                            'type'=>0,
+                            'type'=>2,
                             'update_time'=>$date_time
                         ];
                         $this->model->query()->where('id',$v['id'])->update($upData);
@@ -191,7 +191,7 @@ class HydropowerController extends Controller
                             'this_number'=>bcsub($v['nowMonth'],$v['lastMonth'],2),
                             'clear' => $v['clear'],
                             'money'  => $v['total'],
-                            'type'=>0,
+                            'type'=>2,
                             'year' =>$year,
                             'month'=>$month,
                             'create_time' =>$date_time,
