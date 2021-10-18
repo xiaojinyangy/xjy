@@ -316,7 +316,7 @@ class HydropowerController extends Controller
             $returnData[$key]  = array_values($returnData[$key]);
         }
 
-        return rjson(200,'加载成功',$returnData);
+        return rjson(200,'加载成功',array_values($returnData));
     }
 
     public function del(){
