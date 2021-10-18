@@ -116,10 +116,9 @@ class HydropowerController extends Controller
         $electricArray = $this->request->post('electric');
         $waterArray = $this->request->post('water');
 
-
-        $electricArray =  "[{\"id\":5,\"name\":\"A701\",\"lastMonth\":100,\"type\":\"normal\",\"nowMonth\":300,\"clear\":4,\"total\":100,\"multiple\":0},{\"id\":6,\"name\":\"A708\",\"lastMonth\":200,\"type\":\"multiple\",\"nowMonth\":299,\"clear\":4,\"total\":100,\"multiple\":1},{\"name\":\"a008\",\"lastMonth\":\"100\",\"nowMonth\":\"300\",\"total\":\"400.00\",\"type\":\"multiple\",\"multiple\":\"2\",\"clear\":\"4\"}]";
-        $hy_id = 2;
-        $waterArray =  "[{\"id\":3,\"name\":\"尘世中心\",\"lastMonth\":30,\"nowMonth\":50,\"clear\":4,\"total\":7},{\"id\":7,\"name\":\"A709\",\"lastMonth\":300,\"nowMonth\":1000,\"clear\":4,\"total\":1500},{\"name\":\"a009\",\"lastMonth\":\"200\",\"nowMonth\":\"300\",\"total\":\"100.00\",\"clear\":\"4\"}]";
+       // $electricArray =  "[{\"id\":5,\"name\":\"A701\",\"lastMonth\":200,\"type\":\"normal\",\"nowMonth\":300,\"clear\":4,\"total\":100,\"multiple\":0},{\"id\":6,\"name\":\"A708\",\"lastMonth\":200,\"type\":\"multiple\",\"nowMonth\":299,\"clear\":4,\"total\":100,\"multiple\":1},{\"name\":\"a008\",\"lastMonth\":\"100\",\"nowMonth\":\"300\",\"total\":\"400.00\",\"type\":\"multiple\",\"multiple\":\"2\",\"clear\":\"4\"}]";
+       // $hy_id = 2;
+       // $waterArray =  "[{\"id\":3,\"name\":\"尘世中心\",\"lastMonth\":90,\"nowMonth\":50,\"clear\":4,\"total\":7},{\"id\":7,\"name\":\"A709\",\"lastMonth\":300,\"nowMonth\":1000,\"clear\":4,\"total\":1500},{\"name\":\"a009\",\"lastMonth\":\"200\",\"nowMonth\":\"300\",\"total\":\"100.00\",\"clear\":\"4\"}]";
         $electricArray = json_decode($electricArray,true);
         $waterArray = json_decode($waterArray,true);
         $waterInsertData = [];
@@ -131,70 +130,75 @@ class HydropowerController extends Controller
         $date_time = date('Y-m-d H:i:s',time());
         //电费
         try {
-            foreach($electricArray as $key=>&$v){
-                if(array_key_exists('id',$v)){
-                    $upData = [
-                        'title'=>$v['name'],
-                        'last_month' => $v['lastMonth'],
-                        'this_month' =>$v['nowMonth'],
-                        'this_number'=>bcsub($v['nowMonth'],$v['lastMonth'],2),
-                        'clear' => $v['clear'],
-                        'multiple' =>$v['multiple'],
-                        'money'  => $v['total'],
-                        'type'=>1,
-                        'update_time'=>$date_time
-                    ];
-                    $this->model->query()->where('id',$v['id'])->update($upData);
-                }else{
-                    $electricInsertData[] = [
-                        'shop_id' =>$hy_id,
-                        'title'=>$v['name'],
-                        'last_month' => $v['lastMonth'],
-                        'this_month' =>$v['nowMonth'],
-                        'this_number'=>bcsub($v['nowMonth'],$v['lastMonth'],2),
-                        'clear' => $v['clear'],
-                        'multiple' =>$v['multiple'],
-                        'money'  => $v['total'],
-                        'type'=>1,
-                        'year' =>$year,
-                        'month'=>$month,
-                        'create_time' =>$date_time,
-                        'update_time'=>$date_time
-                    ];
+            if(!empty($electricArray)){
+                foreach($electricArray as $key=>&$v){
+                        if(array_key_exists('id',$v)){
+                            $upData = [
+                                'title'=>$v['name'],
+                                'last_month' => $v['lastMonth'],
+                                'this_month' =>$v['nowMonth'],
+                                'this_number'=>bcsub($v['nowMonth'],$v['lastMonth'],2),
+                                'clear' => $v['clear'],
+                                'multiple' =>$v['multiple'],
+                                'money'  => $v['total'],
+                                'type'=>1,
+                                'update_time'=>$date_time
+                            ];
+                            $this->model->query()->where('id',$v['id'])->update($upData);
+                        }else{
+                            $electricInsertData[] = [
+                                'shop_id' =>$hy_id,
+                                'title'=>$v['name'],
+                                'last_month' => $v['lastMonth'],
+                                'this_month' =>$v['nowMonth'],
+                                'this_number'=>bcsub($v['nowMonth'],$v['lastMonth'],2),
+                                'clear' => $v['clear'],
+                                'multiple' =>$v['multiple'],
+                                'money'  => $v['total'],
+                                'type'=>1,
+                                'year' =>$year,
+                                'month'=>$month,
+                                'create_time' =>$date_time,
+                                'update_time'=>$date_time
+                            ];
+                        }
                 }
+
             }
 
 
             //水费
-            foreach($waterArray as $key=>&$v){
-                if(array_key_exists('id',$v)){
-                    $upData = [
-                        'title'=>$v['name'],
-                        'last_month' => $v['lastMonth'],
-                        'this_month' =>$v['nowMonth'],
-                        'this_number'=>bcsub($v['nowMonth'],$v['lastMonth'],2),
-                        'clear' => $v['clear'],
-                        'money'  => $v['total'],
-                        'type'=>0,
-                        'update_time'=>$date_time
-                    ];
-                    $this->model->query()->where('id',$v['id'])->update($upData);
-                }else{
-                    $waterInsertData[] = [
-                        'shop_id' =>$hy_id,
-                        'title'=>$v['name'],
-                        'last_month' => $v['lastMonth'],
-                        'this_month' =>$v['nowMonth'],
-                        'this_number'=>bcsub($v['nowMonth'],$v['lastMonth'],2),
-                        'clear' => $v['clear'],
-                        'money'  => $v['total'],
-                        'type'=>0,
-                        'year' =>$year,
-                        'month'=>$month,
-                        'create_time' =>$date_time,
-                        'update_time'=>$date_time
-                    ];
-                }
+            if(!empty($waterArray)){
+                foreach($waterArray as $key=>&$v){
+                    if(array_key_exists('id',$v)){
+                        $upData = [
+                            'title'=>$v['name'],
+                            'last_month' => $v['lastMonth'],
+                            'this_month' =>$v['nowMonth'],
+                            'this_number'=>bcsub($v['nowMonth'],$v['lastMonth'],2),
+                            'clear' => $v['clear'],
+                            'money'  => $v['total'],
+                            'type'=>0,
+                            'update_time'=>$date_time
+                        ];
+                        $this->model->query()->where('id',$v['id'])->update($upData);
+                    }else{
+                        $waterInsertData[] = [
+                            'shop_id' =>$hy_id,
+                            'title'=>$v['name'],
+                            'last_month' => $v['lastMonth'],
+                            'this_month' =>$v['nowMonth'],
+                            'this_number'=>bcsub($v['nowMonth'],$v['lastMonth'],2),
+                            'clear' => $v['clear'],
+                            'money'  => $v['total'],
+                            'type'=>0,
+                            'year' =>$year,
+                            'month'=>$month,
+                            'create_time' =>$date_time,
+                            'update_time'=>$date_time
+                        ];
+                    }
+             }
             }
             if(!empty($insertData)){
                 $this->model->query()->insert($waterInsertData);
