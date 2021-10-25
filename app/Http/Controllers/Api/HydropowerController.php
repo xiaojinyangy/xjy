@@ -312,11 +312,12 @@ class HydropowerController extends Controller
              }
         }
         $returnData = array_values($returnData);
+
         foreach ($returnData as $key=>$v){
             $returnData[$key]  = array_values($returnData[$key]);
         }
 
-        return rjson(200,'加载成功',array_values($returnData));
+        return rjson(200,'加载成功',$returnData[0]);
     }
 
     public function del(){
