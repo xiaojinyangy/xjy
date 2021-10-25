@@ -7,7 +7,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ImageModel;
 use App\Models\MessageModel;
+use App\Models\shopPayRant;
 use App\Models\SystemModel;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,7 @@ class HomeController extends Controller
      * @return array
      */
     public function Home(){
+        $user_id =  $this->request->get('id');
         /**
          *首页轮播图
         **/
@@ -50,7 +53,16 @@ class HomeController extends Controller
                 $result[$value['key']] = $value['value'];
             }
         }
-        return rjson(200,'加载成功',['image'=>$image,'message'=>$message,'system'=>$result]);
+        /**缴费订单信息*/
+        $userModel = new User();
+        $shopObj =   $userModel->userIdentity($user_id);
+        $pay_rant_model = new shopPayRant();
+        if(!empty($shopObj)){
+           $shopArr =  $shopObj->toArray();
+        }
+        $pay_rant_msg_number =   $pay_rant_model->query()->where([['shop_id','in',$shopArr]])->where(['is_del'=>0])->count();
+
+        return rjson(200,'加载成功',['image'=>$image,'message'=>$message,'system'=>$result,'pay_msg_number'=>$pay_rant_msg_number]);
     }
 
 

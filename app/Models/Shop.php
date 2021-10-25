@@ -45,6 +45,11 @@ class Shop extends Base
         }
         return $result;
     }
+
+    public function shopRant($shop_id){
+        $shopModel =new Shop();
+        $shopModel->query()->where(['shop_id',$shop_id])->with()
+    }
     //用户
     public function user(){
        return $this->hasOne(User::class,'user_id','user_id');
@@ -63,4 +68,8 @@ class Shop extends Base
     public function rant(){
         return $this->hasMany(HydropowerModel::class,'shop_id','id');
     }
+    public function areaRant(){
+        return $this->hasMany(areaRentModel::class,'area_id','area_id');
+    }
+
 }

@@ -14,6 +14,17 @@ class shopPayRant extends  Base
     const UPDATED_AT = 'update_time';
 
     public function  user(){
-      return  $this->hasOne(User::class,'id','user_id')
+      return  $this->hasOne(User::class,'id','user_id');
     }
+
+    public  function  shop(){
+        return  $this->hasOne(Shop::class,'shop_id','id');
+    }
+    public function rant_ext(){
+        return $this->hasOne(areaRantExtModel::class,'id','area_rant_ext_id');
+    }
+    public function waterElectricRant(){
+        return $this->hasOne(HydropowerModel::class,'shop_id','shop_id');
+    }
+
 }
