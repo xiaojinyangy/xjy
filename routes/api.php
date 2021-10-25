@@ -28,7 +28,7 @@ Route::namespace('Api')->prefix('api')->middleware('throttle:60,1')->group(funct
     
     //首页模块
     Route::prefix('index')->group(function () {
-        Route::post('index', 'HomeController@Home'); //首页 api/api/index/index
+        Route::any('index', 'HomeController@Home'); //首页 api/api/index/index
         Route::post('message','HomeController@message');  //消息  api/api/index/message
     });
     //区域和档口
