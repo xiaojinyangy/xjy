@@ -63,7 +63,7 @@ class HomeController extends Controller
         }
         $pay_rant_msg_number =   $pay_rant_model->query()->where([['shop_id','in',$shopArr]])->where(['is_del'=>0])->count();
 
-        return rjson(200,'加载成功',['image'=>$image,'message'=>$message,'system'=>$result,'pay_msg_number'=>$pay_rant_msg_number]);
+        return rjson(200,'加载成功',['image'=>$image,'message'=>$message,'system'=>isset($result['about'])?$result['about']:"",'pay_msg_number'=>$pay_rant_msg_number]);
     }
 
 
