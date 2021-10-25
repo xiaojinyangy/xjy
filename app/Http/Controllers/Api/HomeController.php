@@ -26,6 +26,7 @@ class HomeController extends Controller
      */
     public function Home(){
         $user_id =  $this->request->get('id');
+        $user_id = 1000;
         /**
          *首页轮播图
         **/
