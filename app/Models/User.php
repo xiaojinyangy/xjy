@@ -31,7 +31,7 @@ class User extends Base
         $jobModel = new JobModel();
         $shopJobModel = new ShopJob();
         if($identity == 1 ){ //员工
-            $jobInfo = $jobModel->where('user_id',$user_id)->select('id')->frist();;
+            $jobInfo = $jobModel->where('user_id',$user_id)->select('id')->first();;
             $shopIdObj =  $shopJobModel->query()->where(['job_id'=>$jobInfo->id])->select('shop_id')->get();
         }else if($identity == 2 ){//店长
             $shopIdObj =   $shopJobModel->query()->where('user_id',$user_id)->select('shop_id')->get();
