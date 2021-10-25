@@ -1,0 +1,27 @@
+ÊÖ»ú£º189 9829 0612
+ 
+ÕËºÅ£ºhw13839725
+
+ÃÜÂë£ºJNH123456
+
+
+
+
+ÔÆ·şÎñÆ÷ 
+ÕËºÅ root ÃÜÂë Jnh159753
+
+±¦Ëş
+http://139.9.47.115:8888/3f06f85e
+http://192.168.0. 176:8888/3f06f85e
+username: dzdkybdm
+password: 009377ff
+
+bt
+  ±¦Ëş¹ÙÍø
+ÕËºÅ 18998290612
+
+ÃÜÂë : btjng123456
+
+
+/www/server/php/74/bin/phpize
+./configure --with-php-config=/www/server/php/74/bin/php-config

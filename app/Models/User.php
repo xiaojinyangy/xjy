@@ -27,7 +27,7 @@ class User extends Base
     }
 
     public function userIdentity($user_id){
-        $identity = $this->query()->find($user_id)->value('identity');
+        $identity = $this->query()->where('user_id',$user_id)->value('identity');
         $jobModel = new JobModel();
         $shopJobModel = new ShopJob();
         if($identity == 1 ){ //员工
