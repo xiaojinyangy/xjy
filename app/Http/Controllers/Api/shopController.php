@@ -113,7 +113,7 @@ class shopController extends Controller
 
 
     /**
-     * 商铺的会员
+     * 商铺的员工
      * @return array
      */
     public function shopJob()
@@ -131,12 +131,17 @@ class shopController extends Controller
         $returnData = [];
         if (!empty($result['data'])) {
             foreach ($result['data'] as $value) {
-                $returnData['area'] = $value['area']['area_name'];
-                $returnData['mouth'] = $value['mouth']['mouth_name'];
-                if (isset($value['job']))
+//                $returnData['area'] = $value['area']['area_name'];
+//                $returnData['mouth'] = $value['mouth']['mouth_name'];
+                if (isset($value['job'])) {
                     foreach ($value['job'] as $v) {
-                        $returnData['job'][] = $v['job'];
+                        if ($v['status'] == 1) {
+                            $returnData['no'][] = $v['job'];
+                        } else {
+                            $returnData['yes'][] = $v['job'];
+                        }
                     }
+                }
             }
             return rjson(200, '加载成功', $returnData);
         }
@@ -150,7 +155,7 @@ public function agree(){
     $user_id = $this->request->get('id');
     $job_id = $this->request->get('job_id');
     $model = new ShopJob();
-    $check = $model->edit(['id'=>$job_id],['status'=>1]);
+    $check = $model->edit(['job_id'=>$job_id],['status'=>1]);
     if($check){
         return rjson(200,'操作成功');
     }

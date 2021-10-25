@@ -23,7 +23,7 @@ class shopRantModel extends Base
             ->orderBy('id','desc')
             ->leftJoin('jh_area_rant_ext as b','b.id','a.area_rant_ext_id')
            ->leftJoin('jh_user_shop as p','p.id','a.shop_id')
-           ->leftJoin('jh_area_rent as c','c.area_id','p.area_id');
+           ->leftJoin('jh_area_rent as c','c.area_id','p.area');
            if(array_key_exists('data',$where)){
                if(!empty($year) && !empty($month)){
                    $result =  $result->whereBetween('a.year',$year)->whereBetween('a.month',$month);

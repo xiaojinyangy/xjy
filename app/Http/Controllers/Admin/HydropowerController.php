@@ -37,8 +37,8 @@ class HydropowerController extends  Controller
 
            $result =  $this->model->query()->from('jh_warte_electric_rant as a')
                ->leftJoin('jh_user_shop as b','a.shop_id','b.id')
-               ->leftJoin('jh_area as c','c.id','b.area_id')
-               ->leftJoin('jh_shop_mouth as d','d.id','b.mouth_id')
+               ->leftJoin('jh_area as c','c.id','b.area')
+               ->leftJoin('jh_shop_mouth as d','d.id','b.mouth')
                 ->where($where)
                 ->select(['a.*','c.area_name','d.mouth_name']);
            if(!empty($year) && !empty($month)){

@@ -55,7 +55,9 @@ Route::namespace('Api')->prefix('api')->middleware('throttle:60,1')->group(funct
         Route::post('refuse','shopController@refuse');//拒绝员工申请 api/api/shop/refuse
         Route::post('remove','shopController@remove');//移除员工申请 api/api/shop/remove
     });
-
+    Route::prefix('pay')->group(function () {
+        Route::post('pay_list', 'payController@payList'); //缴费列表 api/api/pay/pay_list
+    });
 });
 
 

@@ -16,6 +16,7 @@ class User extends Base
         if(!empty($with)){
             $model->with($with);
         }
+
         if($user_id === 0){
             $result  = $model->paginate();
             $result = getPaginateData($result);
@@ -23,5 +24,36 @@ class User extends Base
             $result  = $model->find($user_id);
         }
         return $result;
+    }
+
+    public function userIdentity($user_id){
+        $identity = $this->query()->find($user_id)->value('identity');
+        $jobModel = new JobModel();
+        $shopJobModel = new ShopJob();
+        if($identity == 1 ){ //员工
+
+            $jobInfo = $jobModel->where('user_id',$user_id)->select('id')->frist();;
+            $shopIdObj =  $shopJobModel->query()->where(['job_id'=>$jobInfo->id])->select('shop_id')->get();
+        }else if($identity == 2 ){//店长
+            $shopIdObj =   $shopJobModel->query()->where('user_id',$user_id)->select('shop_id')->get();
+        }
+        return $shopIdObj;
+    }
+
+
+    public function areaMonth($shop_id){
+        $result  = $this->query()
+            ->from('jh_user_shop as shop')
+            ->leftJoin('jh_area as area','area.id','=','shop.area_id')
+            ->leftJoin('jh_shop_mouth as shop_mouth','shop_mouth.id',"=","shop.mouth_id")
+            ->select(['area.area_name','shop_mouth.mouth_name'])
+            ->where(['shop.id'=>$shop_id])
+            ->orderBy('shop.id','desc')->first();
+        if(!empty($result)){
+            return [
+                $result->area_name,$result->mouth_name
+            ];
+        }
+        return false;
     }
 }
