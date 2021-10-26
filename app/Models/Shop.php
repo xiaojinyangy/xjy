@@ -48,7 +48,7 @@ class Shop extends Base
 
     public function shopRant($shop_id){
         $shopModel =new Shop();
-        $shopModel->query()->where(['shop_id',$shop_id])->with()
+        $shopModel->query()->where(['shop_id',$shop_id])->with();
     }
     //用户
     public function user(){
