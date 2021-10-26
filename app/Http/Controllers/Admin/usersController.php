@@ -20,7 +20,7 @@ class usersController extends Controller
 
 
     public function index(){
-        return view('admin.home.test');
+      
       if($this->Request->method() == "POST"){
             $where = [];
             $phone = $this->Request->input('phone');
