@@ -27,6 +27,7 @@ class RemarksController extends Controller
         $user_id = $this->request->get('id');
         $content = $this->request->post('content');
         $limit = $this->request->post('limit');
+        var_dump($user_id);
         if(empty($limit)){
             $limit = 15;
         }
@@ -39,6 +40,7 @@ class RemarksController extends Controller
 
     public function addRemarks(){
         $user_id = $this->request->get('id');
+
         $remarks = $this->request->post('remarks');
         $title = $this->request->post('title');
         if(empty($title)) rjson(0,'请填写备注标题');
