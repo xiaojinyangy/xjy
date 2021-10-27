@@ -87,4 +87,4 @@ Route::namespace('Api')->prefix('api')->middleware('apiauths','throttle:60,1')->
         Route::post('record', 'HydropowerController@record'); //历史记录  api/api/hydropower/record
         Route::post('del', 'HydropowerController@del'); //软删除  api/api/hydropower/del
     });
-});
+});w
