@@ -153,6 +153,19 @@ if(!function_exists('linkRedis')){
         return $redis;
     }
 }
+if(!function_exists('fullTextImage')){
+    function fullTextImage($content){
+        $regular = '/<img.*?src=\"(.*?)\".*?\/?>/i';
+        preg_match_all($regular,trim($content),$pmch);
+        unset($pmch[0]);
+        for($i=0;$i<=count($pmch[1]);$i++){
+            if(isset($pmch[1][$i])){
+                $content =   str_replace($pmch[1][$i],config('appConfig.url_https').$pmch[1][$i],$content);
+            }
+        }
+        return $content;
+    }
+}
 
 
 

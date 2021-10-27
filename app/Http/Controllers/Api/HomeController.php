@@ -19,7 +19,22 @@ class HomeController extends Controller
     {
         $this->request = $request;
     }
-
+    /**
+     *身份选择
+     */
+    public function userIdentity(){
+        $user_id = $this->request->get('user_id');
+         $identity  = $this->request->post('identity');
+         if(empty($identity)){
+             return rjson(0,'请选择身份注册');
+         }
+         $userModel = new User();
+        $bool =  $userModel->query()->where('user_id',$user_id)->update(['identity'=>$identity]);
+        if($bool){
+            return rjson(200,'选择成功');
+        }
+        return rjson(0,'选择失败');
+    }
     /**
      * 首页
      * @return array
@@ -35,7 +50,7 @@ class HomeController extends Controller
         $image = [];
         if(!empty($home_image)){
             foreach($home_image as $value){
-                $image[] = config('url_http').$value['file_path'];
+                $image[] = config('appConfig.url_https').$value['file_path'];
             }
         }
         /**
@@ -53,6 +68,9 @@ class HomeController extends Controller
             foreach($system as $value){
                 $result[$value['key']] = $value['value'];
             }
+        }
+        if(!empty($result['about'])){
+            $result['about'] = fullTextImage($result['about']);
         }
 
             return rjson(200,'加载成功',['image'=>$image,'message'=>$message,'system'=>isset($result['about'])?$result['about']:"","phone" =>isset($result['phone']) ? $result['phone'] : "" ]);
@@ -73,9 +91,10 @@ class HomeController extends Controller
         }else if($state == 2){
             $message = $model->query()->orderBy('create_time','desc')->select(['id','message','create_time'])->get();
             foreach($message as &$value){
-                $value['create_time']  = date('Y-m-d',strtotime($value['create_time']));
+                $value['create_time']  = date('Y-m-d H:i:s',strtotime($value['create_time']));
             }
         }
         return rjson(200,'加载成功',$message);
     }
+
 }
