@@ -27,7 +27,7 @@ class UserShopController extends  Controller
             $search = Ajax_Arr($search);
             if(isset($search['area_id'])){
 
-                $where['shop.area_id'] = $search['area_id'];
+                $where['shop.area'] = $search['area'];
             }
             if(isset($search['mouth_name'])){
                 $where['shop_mouth.mouth_name'] = $search['mouth_name'];
@@ -65,7 +65,7 @@ class UserShopController extends  Controller
         $area_model = new AreaModel();
         $area_list = $area_model->index()['data'];
         $mouth_model = new ShopMouthModel();
-        $mouth_list = $mouth_model->index(['area_id'=>$result['area_id']])['data'];
+        $mouth_list = $mouth_model->index(['area'=>$result['area_id']])['data'];
         return view('admin/shop/set',compact('result','area_list','mouth_list'));
     }
 
