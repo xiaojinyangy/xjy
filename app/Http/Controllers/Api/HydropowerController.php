@@ -42,7 +42,7 @@ class HydropowerController extends Controller
         $where = [];
         $area_id = $this->request->post('area_id');
         if(!empty($area_id)){
-            $where[]= ['shop.area_id','=',$area_id];
+            $where[]= ['shop.area','=',$area_id];
         }
         $mouth_name = $this->request->post('mouth_name');
         if(!empty($mouth_name)){
@@ -332,4 +332,9 @@ class HydropowerController extends Controller
         }
         return rjson(0,'删除失败');
     }
+
+
+    /**
+     * 获取缴费信息
+     */
 }

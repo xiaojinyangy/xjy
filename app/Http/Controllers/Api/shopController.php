@@ -27,11 +27,15 @@ class shopController extends Controller
      */
     public function  userShop(){
         $user_id = $this->request->get('id');
+        $user_id = 1000;
         $user_model = new User();
         $userInfo =  $user_model->query()->find($user_id);
+        if(empty($userInfo)){
+            return  rjson(0,'用户数据不存在');
+        }
         $result =   $this->model->query()->from('jh_user_shop as a')
-            ->leftJoin('jh_shop_mouth as c','c.id','a.mouth_id')
-            ->leftJoin('jh_area as p','p.id','a.area_id')
+            ->leftJoin('jh_shop_mouth as c','c.id','a.mouth')
+            ->leftJoin('jh_area as p','p.id','a.area')
             ->where(['a.user_id'=>$user_id])
             ->select(['p.area_name','c.mouth_name','a.status'])
             ->paginate();
@@ -124,7 +128,7 @@ class shopController extends Controller
             ->with(['area:id,area_name', 'mouth:id,mouth_name', 'job' => function ($query) {
                 $query->with('job:id,name,phone,status')->select(['job_id', 'shop_id']);
             }])
-            ->select(['id', 'area_id', 'mouth_id', 'status'])
+            ->select(['id', 'area', 'mouth', 'status'])
             ->where(['user_id' => $user_id])
             ->paginate();
         $result = getPaginateData($result);
@@ -191,4 +195,7 @@ public function agree(){
         }
         return rjson(0,'操作失败');
     }
+
+
+
 }

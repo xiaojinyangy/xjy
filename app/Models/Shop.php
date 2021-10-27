@@ -23,8 +23,8 @@ class Shop extends Base
             ->with(['rant'=>function ($query)use($Year,$month){
                 $query->select(['id','shop_id','title','last_month','this_month','this_number','money','type','clear','multiple'])->where(['year'=>$Year,'status'=>0,'is_del'=>0]);
             }])
-            ->leftJoin('jh_area as area','area.id','=','shop.area_id')
-            ->leftJoin('jh_shop_mouth as shop_mouth','shop_mouth.id',"=","shop.mouth_id")
+            ->leftJoin('jh_area as area','area.id','=','shop.area')
+            ->leftJoin('jh_shop_mouth as shop_mouth','shop_mouth.id',"=","shop.mouth")
             ->select(['shop.*','area.area_name','shop_mouth.mouth_name'])
             ->where($where)
             ->orderBy('shop.id','desc');
@@ -32,13 +32,12 @@ class Shop extends Base
             $model = $model->whereIn($ext_where['notin'][0],$ext_where['notin'][1]);
         }
 
-        //$with = [            "area" => function($query){$query->select(['id','area_name']);},
+        //$with = ["area" => function($query){$query->select(['id','area_name']);},
 //            "mouth"=>function($query){
 //                $query->select(['id',"mouth_name"]);
 //            }];
         if($state == 1 ){
             $result = $model->get();
-
           //  $result  =  getPaginateData($result);
         }else{
             $result = $model->first();
@@ -47,8 +46,7 @@ class Shop extends Base
     }
 
     public function shopRant($shop_id){
-        $shopModel =new Shop();
-        $shopModel->query()->where(['shop_id',$shop_id])->with();
+//        $shopModel =new Shop();
     }
     //用户
     public function user(){
@@ -56,11 +54,11 @@ class Shop extends Base
     }
     //区域
     public function area(){
-        return $this->hasOne(AreaModel::class,'id','area_id');
+        return $this->hasOne(AreaModel::class,'id','area');
     }
     //档口
     public function mouth(){
-        return $this->hasOne(ShopMouthModel::class,'id','mouth_id');
+        return $this->hasOne(ShopMouthModel::class,'id','mouth');
     }
     public function job(){
         return $this->hasMany(ShopJob::class,'shop_id','id');
@@ -69,7 +67,7 @@ class Shop extends Base
         return $this->hasMany(HydropowerModel::class,'shop_id','id');
     }
     public function areaRant(){
-        return $this->hasMany(areaRentModel::class,'area_id','area_id');
+        return $this->hasMany(areaRentModel::class,'area','area_id');
     }
 
 }
