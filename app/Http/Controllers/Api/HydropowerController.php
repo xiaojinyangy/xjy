@@ -229,8 +229,8 @@ class HydropowerController extends Controller
 
        $model  =  $this->model->query()->from('jh_warte_electric_rant as a')
             ->leftJoin('jh_user_shop as b','b.id','a.shop_id')
-            ->leftJoin('jh_area as area','area.id','=','b.area_id')
-            ->leftJoin('jh_shop_mouth as shop_mouth','shop_mouth.id',"=","b.mouth_id")
+            ->leftJoin('jh_area as area','area.id','=','b.area')
+            ->leftJoin('jh_shop_mouth as shop_mouth','shop_mouth.id',"=","b.mouth")
             ->where($where)
             ->select()->orderBy('a.id','desc');
         $mouth_name = $this->request->post('mouth_name');
