@@ -27,11 +27,11 @@ class JobController extends Controller
        if($code == 1){
                 return rjson(200,'请求成功',$areaData);
        }
-       $mouthData =  $mouthModel->query()->select(['id','mouth_name','area_id'])->where(['is_del'=>0,'status'=>1])->get()->toArray();
+       $mouthData =  $mouthModel->query()->select(['id','mouth_name','area'])->where(['is_del'=>0,'status'=>1])->get()->toArray();
        if( !empty($areaData) &&  !empty($mouthData)){
            foreach($areaData as $key=>$v){
                foreach ($mouthData as $value){
-                   if($v['id'] == $value['area_id']){
+                   if($v['id'] == $value['area']){
                        $areaData[$key]['child'][] = $value;
                    }
                }
