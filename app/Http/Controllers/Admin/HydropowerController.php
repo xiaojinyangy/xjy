@@ -24,7 +24,7 @@ class HydropowerController extends  Controller
            $search = $this->request->post('form');
             $search = Ajax_Arr($search);
             $where = ['a.is_del'=>0];
-            if(isset($search['area_id'])) $where['b.area_id'] = $search['area_id'];
+            if(isset($search['area'])) $where['b.area'] = $search['area'];
             if(isset($search['mouth_name'])) $where['d.mouth_name'] = $search['mouth_name'];
             if(isset($search['data'])){
                 $data_slot =  explode('--',$search['data']);
