@@ -2,7 +2,7 @@
 
 
 namespace App\Http\Controllers\Api;
-
+use Illuminate\Support\Facades\Cache;
 
 use App\Http\Controllers\Controller;
 use App\Models\AreaModel;
@@ -19,6 +19,7 @@ class JobController extends Controller
         $this->request = $request;
     }
     public function areaMouth(){
+
         $model = new AreaModel();
         $mouthModel = new ShopMouthModel();
        $code =  $this->request->post('code');

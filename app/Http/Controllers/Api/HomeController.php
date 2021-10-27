@@ -54,17 +54,10 @@ class HomeController extends Controller
                 $result[$value['key']] = $value['value'];
             }
         }
-        /**缴费订单信息*/
-        $userModel = new User();
-        $shopObj =   $userModel->userIdentity($user_id);
-        $pay_rant_model = new shopPayRant();
-        if(!empty($shopObj)){
-           $shopArr =  $shopObj->toArray();
-        }
-        $pay_rant_msg_number =   $pay_rant_model->query()->where([['shop_id','in',$shopArr]])->where(['is_del'=>0])->count();
 
-        return rjson(200,'加载成功',['image'=>$image,'message'=>$message,'system'=>isset($result['about'])?$result['about']:"",'pay_msg_number'=>$pay_rant_msg_number]);
+            return rjson(200,'加载成功',['image'=>$image,'message'=>$message,'system'=>isset($result['about'])?$result['about']:"","phone" =>isset($result['phone']) ? $result['phone'] : "" ]);
     }
+
 
 
     public function message(){
@@ -78,7 +71,10 @@ class HomeController extends Controller
             }
             $message = $model->query()->where($where)->orderBy('create_time','desc')->select(['id','message'])->first();
         }else if($state == 2){
-            $message = $model->query()->orderBy('create_time','desc')->select(['id','message'])->get();
+            $message = $model->query()->orderBy('create_time','desc')->select(['id','message','create_time'])->get();
+            foreach($message as &$value){
+                $value['create_time']  = date('Y-m-d',strtotime($value['create_time']));
+            }
         }
         return rjson(200,'加载成功',$message);
     }

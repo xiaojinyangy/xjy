@@ -53,7 +53,7 @@ class payController extends Controller
             $end_date = [$start_date_arr[1],$end_date_arr[2]];
         }
 
-        $model =  $shopPayRantModel->query()->where(['is_del'=>0,'pay_status'=>$pay_status])->whereIn('shop_id',$shopIdArr)->with(['shop','rant_ext','waterElectricRant']);
+        $model =  $shopPayRantModel->query()->where(['is_del'=>0,'pay_status'=>$pay_status])->whereIn('id',$shopIdArr)->with(['shop','rant_ext','waterElectricRant']);
             if(!empty($start_date) && !empty($end_date)){
                $model =  $model->whereBetween('year',$start_date)->whereBetween('month',$end_date);
             }
@@ -61,7 +61,7 @@ class payController extends Controller
             foreach($model as $key=>$value){
                 $result['year'] =$value['year'];//年
                 $result['month'] =$value['month'];//月
-                $result['rant_ext_money'] =>$value['rant_ext']['rant_money'];//附加费
+                $result['rant_ext_money'] = $value['rant_ext']['rant_money'];//附加费
                 /**
                  * 水电费处理
                  */
@@ -79,4 +79,8 @@ class payController extends Controller
          return $result->toArray();
         }
 
+
+        public function payMsg(){
+
+        }
     }

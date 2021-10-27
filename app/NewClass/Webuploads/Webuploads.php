@@ -86,7 +86,7 @@ class Webuploads
 		  }
 		  //-------------------------------------------------------
 		    $fileName=$this->unicode2utf8('"'.$fileName.'"');
-		    $fileName= iconv("UTF-8", "GBK", $fileName);//防止fopen语句失效
+		   // $fileName= iconv("UTF-8", "GBK", $fileName);//防止fopen语句失效
 		  //-----------------------------------------------------------------------
 		  $oldName = $fileName;
 		  $filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
