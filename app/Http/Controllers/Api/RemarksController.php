@@ -34,7 +34,7 @@ class RemarksController extends Controller
             $content = '';
         }
         $data =  $this->model->viewMyRemarks(['user_id'=>$user_id],$limit,$content);
-        return rjson(200,'加载成功',$data);
+        return rjson(200,'加载成功',$data['data']);
     }
 
     public function addRemarks(){
