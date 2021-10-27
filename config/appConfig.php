@@ -3,6 +3,6 @@
 
 return [
     "passKey" => 'Zjhd',
-    "url_http" => '',
-    "url_https" => ''
+    "url_http" => 'http://www.jnhmarket.cn',
+    "url_https" => 'https://www.jnhmarket.cn'
 ];

@@ -12,6 +12,13 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
+   protected $minAppId; //
+
+    protected $secretKey;
+    public function __construct(){
+        $this->minAppId = config('glabal.miniapp_id');
+        $this->secretKey = config('glabal.secretKey');
+    }
     /**
      * @param Request $request
      * @return array
@@ -48,6 +55,7 @@ class LoginController extends Controller
             ];
             $id = $user_model->add($add);
             $user = $user_model->getone(['id' => $id]);
+
         }
         $data = $this->setredis($user);
         if ($data) {
@@ -90,6 +98,7 @@ class LoginController extends Controller
                 'member_style' => $user->member_style,
                 'token' => $token,
                 'headpic' => $user->headpic,
+                'identity' => $user->identity
             ];
             return $data;
         } else {
@@ -144,16 +153,15 @@ class LoginController extends Controller
 
     public function getUserPhone(Request $request){
         $user_id  = $request->get('id');
-        $appid = env('WX_APP_ID');
-        $appkey = env('WX_APP_KEY');
+
         $encryptedData = $request->post("encryptedData");
         $iv = $request->post("iv");
         $code = $request->post("code");
-        $weixin = file_get_contents("https://api.weixin.qq.com/sns/jscode2session?appid=$appid&secret=$appkey&js_code=".$code."&grant_type=authorization_code");//通过code换取网页授权session_key
+        $weixin = file_get_contents("https://api.weixin.qq.com/sns/jscode2session?appid=$this->minAppId&secret=$this->secretKey&js_code=".$code."&grant_type=authorization_code");//通过code换取网页授权session_key
         $jsonCode = json_decode($weixin,true);
         //   $open_id = $jsonCode["openid"];
         $access_token = $jsonCode["session_key"];
-        $decode  = new WXBizDataCrypt($appid,$appkey);
+        $decode  = new WXBizDataCrypt($this->minAppId,$access_token);
         $data = $decode->decryptData($encryptedData,$iv);
         $result = json_decode($data,true);
         $user_phone = $result["purePhoneNumber"];
