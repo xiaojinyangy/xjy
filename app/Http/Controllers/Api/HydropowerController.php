@@ -135,8 +135,8 @@ class HydropowerController extends Controller
                         if(array_key_exists('id',$v)){
                             $upData = [
                                 'title'=>$v['name'],
-                                'last_month' => $v['lastMonth'],
-                                'this_month' =>$v['nowMonth'],
+                                'last_month' => empty($v['lastMonth']) ? 0 $v['lastMonth'],
+                                'this_month' =>empty($v['nowMonth']) ? 0: $v['nowMonth'],
                                 'this_number'=>bcsub($v['nowMonth'],$v['lastMonth'],2),
                                 'clear' => $v['clear'],
                                 'multiple' =>$v['multiple'],
@@ -149,8 +149,8 @@ class HydropowerController extends Controller
                             $electricInsertData[] = [
                                 'shop_id' =>$hy_id,
                                 'title'=>$v['name'],
-                                'last_month' => $v['lastMonth'],
-                                'this_month' =>$v['nowMonth'],
+                                'last_month' =>empty($v['lastMonth']) ? 0: $v['lastMonth'] ,
+                                'this_month' =>empty($v['lastMonth']) ? $v['nowMonth'] :0,
                                 'this_number'=>bcsub($v['nowMonth'],$v['lastMonth'],2),
                                 'clear' => $v['clear'],
                                 'multiple' =>$v['multiple'],
