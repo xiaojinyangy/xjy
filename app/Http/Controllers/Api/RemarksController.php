@@ -27,7 +27,6 @@ class RemarksController extends Controller
         $user_id = $this->request->get('id');
         $content = $this->request->post('content');
         $limit = $this->request->post('limit');
-        var_dump($user_id);
         if(empty($limit)){
             $limit = 15;
         }
