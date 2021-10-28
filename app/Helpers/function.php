@@ -160,7 +160,9 @@ if(!function_exists('fullTextImage')){
         unset($pmch[0]);
         for($i=0;$i<=count($pmch[1]);$i++){
             if(isset($pmch[1][$i])){
-                $content =   str_replace($pmch[1][$i],config('appConfig.url_https').$pmch[1][$i],$content);
+                $str =   "<img class='content_img'";
+                $content =  str_replace("<img ",$str,$content);
+                $content =   str_replace($pmch[1][$i],config('appConfig.url_http').$pmch[1][$i],$content);
             }
         }
         return $content;

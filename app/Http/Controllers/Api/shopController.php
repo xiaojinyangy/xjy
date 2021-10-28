@@ -133,29 +133,25 @@ class shopController extends Controller
         }
         $shopJobModel = new ShopJob();
 
-        $result = $shopJobModel->query()
-            ->with(['job' => function ($query){
-                $query->with(['job']);
-            }])
+        $result = $shopJobModel->query()->with('job:id,name,status,phone')
             ->select(['id','shop_id','job_id','status'])
             ->whereIn('shop_id',$shopIdArr)
             ->paginate();
-      //  var_dump($result->toArray());
         $result = getPaginateData($result);
         $returnData = [];
+
         if (!empty($result['data'])) {
             foreach ($result['data'] as $value) {
                 if (isset($value['job'])) {
-                    foreach ($value['job'] as $v) {
-                        if ($v['status'] == 0) {
-                            $returnData['no'][] = $v['job'];
+                    $value['job']['status'] = $value['status'];
+                        if ($value['status'] == 0) {
+                            $returnData['no'][] = $value['job'];
                         } else {
-                            $returnData['yes'][] = $v['job'];
+                            $returnData['yes'][] = $value['job'];
                         }
-                    }
                 }
             }
-          //  $returnData['no_number'] = count($returnData['no']);
+            $returnData['no_number'] = count($returnData['no']);
             return rjson(200, '加载成功', $returnData);
         }
     }
