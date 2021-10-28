@@ -87,7 +87,7 @@ class HomeController extends Controller
             if(!empty($message_id)){
                 $where = ['id'=>$message_id];
             }
-            $message = $model->query()->where($where)->orderBy('create_time','desc')->select(['id','message'])->first();
+            $message = $model->query()->where($where)->orderBy('create_time','desc')->select(['id','message','title'])->first();
         }else if($state == 2){
             $message = $model->query()->orderBy('create_time','desc')->select(['id','message','create_time'])->get();
             foreach($message as &$value){

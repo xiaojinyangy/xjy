@@ -3,7 +3,7 @@
 
 namespace App\Http\Controllers\Api;
 
-
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\RemarksModel;
 use Illuminate\Http\Request;
@@ -24,6 +24,7 @@ class RemarksController extends Controller
      * @return array
      */
     public function view(){
+        Log::info(date('Y-m-d H:i:s')."请求我的备注");
         $user_id = $this->request->get('id');
         $content = $this->request->post('content');
         $limit = $this->request->post('limit');
