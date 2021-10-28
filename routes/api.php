@@ -30,6 +30,8 @@ Route::namespace('Api')->prefix('api')->middleware('throttle:60,1')->group(funct
     Route::prefix('index')->group(function () {
         Route::any('index', 'HomeController@Home'); //首页 api/api/index/index
         Route::post('message','HomeController@message');  //消息  api/api/index/message
+        Route::post('select_identity','HomeController@userIdentity');  //消息  api/api/index/select_identity
+
     });
     //区域和档口
 //    Route::prefix('index')->group(function () {
@@ -65,6 +67,9 @@ Route::namespace('Api')->prefix('api')->middleware('throttle:60,1')->group(funct
 Route::namespace('Api')->prefix('api')->middleware('apiauths','throttle:60,1')->group(function () {
 
     //用户
+    Route::prefix('user')->group(function () {
+        Route::post('index', 'UserController@index'); //个人中心 api/index/user/index
+    });
     Route::prefix('user')->group(function () {
         Route::post('index', 'UserController@index'); //个人中心 api/index/user/index
     });

@@ -14,7 +14,7 @@ class userController extends Controller
     }
 
     public function getIdentity(){
-        $user_id =
+
     }
 
 }

@@ -31,6 +31,7 @@ class shop  extends Base
             'idcard' => 'required',//身份证
             'idcard_font' => '',
             'idcard_back' => 'required', //身份证照片
+            'address' => 'required',
             'license' => 'required', //营业执照照片
             'is_control' =>'required', //是否为实际控制人 1 => 是 0=>否 默认 1
             'now_user_name' =>'', //实际控制人姓名

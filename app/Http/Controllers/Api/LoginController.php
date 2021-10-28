@@ -16,8 +16,8 @@ class LoginController extends Controller
 
     protected $secretKey;
     public function __construct(){
-        $this->minAppId = config('glabal.miniapp_id');
-        $this->secretKey = config('glabal.secretKey');
+        $this->minAppId = "wx014f1dcdeba0cd31";
+        $this->secretKey = "47c054e77ec1dff72db09f681eaa86ff";
     }
     /**
      * @param Request $request
@@ -72,8 +72,8 @@ class LoginController extends Controller
     public function apiData($code)
     {
         //小程序开发账户
-        $app_id = config('glabal.miniapp_id'); //
-        $secret = config('glabal.key');
+        $app_id =$this->minAppId; //
+        $secret = $this->secretKey;
         $URL = "https://api.weixin.qq.com/sns/jscode2session?appid=" . $app_id . "&secret=" . $secret . "&js_code=" . $code . "&grant_type=authorization_code";
         return curl_get($URL);
     }
