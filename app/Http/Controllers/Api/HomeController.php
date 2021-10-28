@@ -90,9 +90,11 @@ class HomeController extends Controller
             $message = $model->query()->where($where)->orderBy('create_time','desc')->select(['id','message','title'])->first();
         }else if($state == 2){
             $message = $model->query()->orderBy('create_time','desc')->select(['id','message','create_time','title'])->paginate();
-            foreach($message as &$value){
+            $message = getPaginateData($message);
+            foreach($message['data'] as &$value){
                 $value['create_time']  = date('Y-m-d H:i:s',strtotime($value['create_time']));
             }
+            $message = $message['data'];
         }
         return rjson(200,'加载成功',$message);
     }
