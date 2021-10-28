@@ -10,6 +10,7 @@ use App\Http\Requests\index\shop;
 use App\Models\ShopJob;
 use App\Models\User;
 use Illuminate\Http\Request;
+use PHPUnit\Util\Json;
 
 class shopController extends Controller
 {
@@ -90,7 +91,15 @@ class shopController extends Controller
        return  rjson(200,'加载成功',$shopInfo);
 
     }
-
+        public  function  delShop(){
+            $user_id = $this->request->get('id');
+            $user_id = 1000;
+            $shop_id = $this->request->post('shop_id');
+            $bool = $this->model->query()->where('id',$shop_id)->update(['is_del'=>1]);
+            if($bool){
+                return rjson(200,'删除成功');
+            }
+        }
     /**
      * 修改商铺信息
      * @param shop $shopRequest
@@ -133,10 +142,11 @@ class shopController extends Controller
         }
         $shopJobModel = new ShopJob();
 
-        $result = $shopJobModel->query()->with('job:id,name,status,phone')
-            ->select(['id','shop_id','job_id','status'])
+        $result = $shopJobModel->query()->with(['job:id,name,status,phone','user:user_id,headpic'])
+            ->select(['id','shop_id','job_id','status','user_id'])
             ->whereIn('shop_id',$shopIdArr)
             ->paginate();
+
         $result = getPaginateData($result);
         $returnData = [];
 
@@ -144,6 +154,7 @@ class shopController extends Controller
             foreach ($result['data'] as $value) {
                 if (isset($value['job'])) {
                     $value['job']['status'] = $value['status'];
+                    $value['job']['headpic'] = isset($value['user']['headpic']) ? $value['user']['headpic']: "";
                         if ($value['status'] == 0) {
                             $returnData['no'][] = $value['job'];
                         } else {
@@ -152,6 +163,7 @@ class shopController extends Controller
                 }
             }
             $returnData['no_number'] = count($returnData['no']);
+            $returnData['my_job'] = count($returnData['yes']);
             return rjson(200, '加载成功', $returnData);
         }
     }
