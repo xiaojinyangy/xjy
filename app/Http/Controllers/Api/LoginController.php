@@ -91,11 +91,11 @@ class LoginController extends Controller
                 //      return rjson(0, '登录错误！');
             }
             $data = [
-                'id' => $user->user_id,
                 'nickname' => $user->nick_name,
                 'token' => $token,
                 'headpic' => $user->headpic,
-                'identity' => $user->identity
+                'identity' => $user->identity,
+                'phone' => isset($user->phone) ? $user->phone :""
             ];
             return $data;
         } else {
