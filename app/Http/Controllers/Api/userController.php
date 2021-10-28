@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Moddel\User;
 use Illuminate\Http\Request;
 
 class userController extends Controller
@@ -14,7 +14,8 @@ class userController extends Controller
 
     public function getUserInfo(Request $request){
         $user_id = $request->get('id');
-        $userModel = new User();
+
+        $userModel = new \App\Models\User();
        $userData =  $userModel->query()->select(['nick_name','phone','identity','identity'])->find($user_id);
        if(!empty($userData)){
            return rjson(0,'请求成功',$userData->toArray());

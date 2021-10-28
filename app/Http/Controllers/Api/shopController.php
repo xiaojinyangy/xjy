@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests\index\shop;
+use App\Models\JobModel;
 use App\Models\ShopJob;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -27,29 +28,58 @@ class shopController extends Controller
      * @return array
      */
     public function  userShop(){
-        $user_id = $this->request->get('id');
+        $user_id = $this->request->get('user_id');
         $user_id = 1000;
         $user_model = new User();
         $userInfo =  $user_model->query()->find($user_id);
         if(empty($userInfo)){
             return  rjson(0,'用户数据不存在');
         }
-        $result =   $this->model->query()->from('jh_user_shop as a')
-            ->leftJoin('jh_shop_mouth as c','c.id','a.mouth')
-            ->leftJoin('jh_area as p','p.id','a.area')
-            ->where(['a.user_id'=>$user_id])
-            ->select(['p.area_name','c.mouth_name','a.status'])
-            ->paginate();
-        $result = getPaginateData($result);
-        $returnData = [
-            "user_name" => $userInfo->nick_name,
-            "phone" =>  $userInfo->phone,
-            "headpic" => $userInfo->headpic,
-            "shop_number" => $result['total'],
-            "list" => $result['data'],
-          //   $data['user_id'] = $user_id
-        ];
-        return rjson(200,'测试',$returnData);
+        if($userInfo->identity == 2 ){
+           //店长
+            $result =   $this->model->query()->from('jh_user_shop as a')
+                ->leftJoin('jh_shop_mouth as c','c.id','a.mouth')
+                ->leftJoin('jh_area as p','p.id','a.area')
+                ->where(['a.user_id'=>$user_id])
+                ->select(['a.id','p.area_name','c.mouth_name','a.status'])
+                ->paginate();
+            $result = getPaginateData($result);
+            $returnData = [
+//            "user_name" => $userInfo->nick_name,
+//            "phone" =>  $userInfo->phone,
+//            "headpic" => $userInfo->headpic,
+//                "shop_number" => $result['total'],
+                "list" => $result['data'],
+                //   $data['user_id'] = $user_id
+            ];
+            return rjson(200,'加载成功',$result['data']);
+        }else if ($userInfo->identity == 1){
+            //员工
+            $shopJobModel =new ShopJob();
+          $result =   $shopJobModel->query()->where(['user_id'=>$user_id])->with(['shop'=>function($query){
+                $query->with(['mouth:id,mouth_name','area:id,area_name'])->select(['id','user_id','id','area','mouth','name']);
+            }])->paginate();
+
+//          var_dump($result->toArray());
+            $result = getPaginateData($result);
+            $returnData =[];
+
+            foreach($result['data'] as $v){
+
+                $returnData[] = [
+                    'shop_id' => $v['user_id'],
+                    "area_name"=>$v['area']['area_name'],
+                    "mouth_name"=> $v['mouth']['mouth_name'],
+                    "status"=>$v['status'],
+                ];
+            }
+            return rjson(0,'加载成功',$returnData);
+
+
+        }else{
+            return rjson(0,'网络异常');
+        }
+
     }
     /**
      * 添加商铺

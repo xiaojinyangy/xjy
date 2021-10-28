@@ -19,4 +19,7 @@ class ShopJob extends Base
     public function user(){
         return $this->hasOne(User::class,'user_id','user_id');
     }
+    public function shop(){
+        return $this->hasOne(Shop::class,'id','shop_id');
+    }
 }

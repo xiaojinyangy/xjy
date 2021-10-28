@@ -53,7 +53,8 @@ class payController extends Controller
             $end_date = [$start_date_arr[1],$end_date_arr[2]];
         }
 
-        $model =  $shopPayRantModel->query()->where(['is_del'=>0,'pay_status'=>$pay_status])->whereIn('id',$shopIdArr)->with(['shop','rant_ext','waterElectricRant']);
+        $model =  $shopPayRantModel->query()->where(['is_del'=>0,'pay_status'=>$pay_status])->whereIn('id',$shopIdArr)
+            ->with(['shop','rant_ext','waterElectricRant']);
             if(!empty($start_date) && !empty($end_date)){
                $model =  $model->whereBetween('year',$start_date)->whereBetween('month',$end_date);
             }
