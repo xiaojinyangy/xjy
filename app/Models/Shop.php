@@ -45,8 +45,20 @@ class Shop extends Base
         return $result;
     }
 
+    /**
+     * 获取自己的商铺
+     * @param $shop_id
+     */
+    public function getMyShop($user_id){
+        $shopData = $this->query()->where('user_id',$user_id)->get();
+        if(!empty($shopData)){
+             return $shopData->toArray();
+        }else{
+            return [];
+        }
+    }
     public function shopRant($shop_id){
-//        $shopModel =new Shop();
+
     }
     //用户
     public function user(){
