@@ -60,13 +60,16 @@ class shopController extends Controller
         $user_id = 1000;
         $data =  $shopRequest->validated();
       //  $preg5 = '/^(1[1-5]{1}[0-2]{1}|2[1-3]{1}[0-2]{1}|3[0-2]{1}[0-1]{1})[0-9]{1}[0-8]{1}[0-9]{1}(19[0-9]{2}|200[0-9]{1}|201[0-5]{1})((01|03|05|07|08|10|12){0,1}(0[1-9]{1}|[1-2]{1}[0-9]{1}|3[0-1]{1})|(04|06|09|11)(0[1-9]{1}|[1-2]{1}[0-9]{1}|30)|02(0[1-9]{1}|[1-2]{1}[0-9]{1}))[0-9]{3}[0-9xX]{1}$/';
-        if($data['is_control'] == 0){
-          $now_user_name = $this->request->post('now_user_name');
-          $now_user_phone  = $this->request->post('now_user_phone');
+        if($data['control'] == 0){
+          $now_user_name = $this->request->post('c_name');
+          $now_user_phone  = $this->request->post('c_phone');
+          $c_idcard = $this->request->post('c_idcard');
           if(empty($now_user_name)) return rjson(0,'请填写实际控制人姓名');
           if(empty($now_user_phone)) return rjson(0,'请填写实际控制人电话');
-            $data['now_user_name'] = $now_user_name;
-            $data['now_user_phone'] = $now_user_phone;
+            if(empty($c_idcard)) return rjson(0,'请填写实际控制人身份证');
+            $data['c_name'] = $now_user_name;
+            $data['c_phone'] = $now_user_phone;
+            $data['c_idcard'] = $now_user_phone;
         }
         $data['user_id'] = $user_id;
         $judge = $this->model->add($data);
@@ -85,8 +88,8 @@ class shopController extends Controller
         $user_id = 1000;
         $shop_id = $this->request->post('shop_id');
        $shopInfo =  $this->model->query()->where(['id'=>$shop_id,'user_id'=>$user_id])->first();
-        $shopInfo['area_mouth'] = $shopInfo['area_id'] . "," . $shopInfo['mouth_id'];
-        unset($shopInfo['area_id'],$shopInfo['mouth_id']);
+        $shopInfo['area_mouth'] = $shopInfo['area'] . "," . $shopInfo['mouth'];
+        unset($shopInfo['area'],$shopInfo['mouth']);
        if(empty($shopInfo)) return rjson(0,'网络异常,请稍后再试');
        return  rjson(200,'加载成功',$shopInfo);
 
@@ -99,6 +102,7 @@ class shopController extends Controller
             if($bool){
                 return rjson(200,'删除成功');
             }
+            return rjson(0,'删除成功');
         }
     /**
      * 修改商铺信息
@@ -109,13 +113,16 @@ class shopController extends Controller
         $user_id = $this->request->get('id');
         $shop_id = $this->request->post('shop_id');
         $data = $shopRequest->validated();
-        if($data['is_control'] == 0){
-            $now_user_name = $this->request->post('now_user_name');
-            $now_user_phone  = $this->request->post('now_user_phone');
+        if($data['control'] == 0){
+            $now_user_name = $this->request->post('c_name');
+            $now_user_phone  = $this->request->post('c_phone');
+            $c_idcard = $this->request->post('c_idcard');
             if(empty($now_user_name)) return rjson(0,'请填写实际控制人姓名');
             if(empty($now_user_phone)) return rjson(0,'请填写实际控制人电话');
-            $data['now_user_name'] = $now_user_name;
-            $data['now_user_phone'] = $now_user_phone;
+            if(empty($c_idcard)) return rjson(0,'请填写实际控制人身份证');
+            $data['c_name'] = $now_user_name;
+            $data['c_phone'] = $now_user_phone;
+            $data['c_idcard'] = $now_user_phone;
         }
         $check = $this->model->query()->where(['id'=>$shop_id])->update($data);
         if($check){

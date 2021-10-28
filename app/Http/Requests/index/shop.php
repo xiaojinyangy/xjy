@@ -29,13 +29,11 @@ class shop  extends Base
             'phone' =>'required',//电话
             'name' => 'required|max:55',//姓名
             'idcard' => 'required',//身份证
-            'idcard_font' => '',
-            'idcard_back' => 'required', //身份证照片
+            'idcard_font' => 'required',//身份证照片(正面)
+            'idcard_back' => 'required', //身份证照片(反面)
             'address' => 'required',
             'license' => 'required', //营业执照照片
-            'is_control' =>'required', //是否为实际控制人 1 => 是 0=>否 默认 1
-            'now_user_name' =>'', //实际控制人姓名
-            'now_user_phone' => '',//实际控制人电话
+            'control' =>'required', //是否为实际控制人 1 => 是 0=>否 默认 1
         ];
 
     }
