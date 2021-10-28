@@ -47,7 +47,6 @@ class LoginController extends Controller
             $add = [
                 'openid' => json_decode($apiData)->openid,//openid
                 'regist_time' => time(),//注册时间
-                'member_style' => 1,//身份状态:1=>.用户,2=>志愿者
                 'nick_name' => $user_arr['nickName'],//用户名
                 'sex' => $user_arr['gender'],//性别 0：未知、1：男、2：女
                 'headpic' => $user_arr['avatarUrl'],
@@ -92,9 +91,8 @@ class LoginController extends Controller
                 //      return rjson(0, '登录错误！');
             }
             $data = [
-                'id' => $user->id,
-                'nickname' => $user->nickname,
-                'member_style' => $user->member_style,
+                'id' => $user->user_id,
+                'nickname' => $user->nick_name,
                 'token' => $token,
                 'headpic' => $user->headpic,
                 'identity' => $user->identity
