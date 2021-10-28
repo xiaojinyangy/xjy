@@ -167,6 +167,39 @@ if(!function_exists('fullTextImage')){
         }
         return $content;
     }
+
+    // 一个使用curl实现的get方法请求
+    if (!function_exists('curl_get')) {
+        function curl_get($url)
+        {
+            $info = curl_init();
+            curl_setopt($info, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($info, CURLOPT_HEADER, 0);
+            curl_setopt($info, CURLOPT_NOBODY, 0);
+            curl_setopt($info, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($info, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($info, CURLOPT_URL, $url);
+            $output = curl_exec($info);
+            curl_close($info);
+            return $output;
+        }
+    }
+
+    if (!function_exists('curlPost')) {
+        function curlPost($url, $data = [])
+        {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            $result = curl_exec($ch);
+            curl_close($ch);
+            return $result;
+        }
+    }
 }
 
 
