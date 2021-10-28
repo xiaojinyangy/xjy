@@ -50,7 +50,7 @@ class HomeController extends Controller
         $image = [];
         if(!empty($home_image)){
             foreach($home_image as $value){
-                $image[] = config('appConfig.url_https').$value['file_path'];
+                $image[] = config('appConfig.url_http').$value['file_path'];
             }
         }
         /**
