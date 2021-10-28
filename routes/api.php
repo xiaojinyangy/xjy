@@ -72,7 +72,7 @@ Route::namespace('Api')->prefix('api')->middleware('apiauths','throttle:60,1')->
         Route::post('select_identity','HomeController@userIdentity');  //消息  api/api/user/select_identity
     });
     Route::prefix('user')->group(function () {
-        Route::post('get_user_info', 'UserController@getUserInfo'); //个人中心 api/api/user/get_user_info
+        Route::post('get_user_info', 'userController@getUserInfo'); //个人中心 api/api/user/get_user_info
     });
 
 
