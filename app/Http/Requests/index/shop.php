@@ -24,13 +24,13 @@ class shop  extends Base
     public function rules()
     {
        return [
-            'area_id' => 'required', //区域
-            'mouth_id'=> 'required', //档口
+            'area' => 'required', //区域
+            'mouth'=> 'required', //档口
             'phone' =>'required',//电话
             'name' => 'required|max:55',//姓名
-            'id_no' => 'required',//身份证
-            'id_addres' => '',
-            'id_no_image' => 'required', //身份证照片
+            'idcard' => 'required',//身份证
+            'idcard_font' => '',
+            'idcard_back' => 'required', //身份证照片
             'license' => 'required', //营业执照照片
             'is_control' =>'required', //是否为实际控制人 1 => 是 0=>否 默认 1
             'now_user_name' =>'', //实际控制人姓名
