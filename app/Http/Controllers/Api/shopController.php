@@ -124,22 +124,30 @@ class shopController extends Controller
     {
         $user_id = $this->request->get('id');
         $user_id = 1000;
-        $result = $this->model->query()
-            ->with(['area:id,area_name', 'mouth:id,mouth_name', 'job' => function ($query) {
-                $query->with('job:id,name,phone,status')->select(['job_id', 'shop_id']);
+        $shopData  = $this->model->getMyShop($user_id);
+        $shopIdArr =[];
+        if(!empty($shopData)){
+            foreach($shopData as $v){
+                $shopIdArr[] = $v['id'];
+            }
+        }
+        $shopJobModel = new ShopJob();
+
+        $result = $shopJobModel->query()
+            ->with(['job' => function ($query){
+                $query->with(['job']);
             }])
-            ->select(['id', 'area', 'mouth', 'status'])
-            ->where(['user_id' => $user_id])
+            ->select(['id','shop_id','job_id','status'])
+            ->whereIn('shop_id',$shopIdArr)
             ->paginate();
+      //  var_dump($result->toArray());
         $result = getPaginateData($result);
         $returnData = [];
         if (!empty($result['data'])) {
             foreach ($result['data'] as $value) {
-//                $returnData['area'] = $value['area']['area_name'];
-//                $returnData['mouth'] = $value['mouth']['mouth_name'];
                 if (isset($value['job'])) {
                     foreach ($value['job'] as $v) {
-                        if ($v['status'] == 1) {
+                        if ($v['status'] == 0) {
                             $returnData['no'][] = $v['job'];
                         } else {
                             $returnData['yes'][] = $v['job'];
@@ -147,6 +155,7 @@ class shopController extends Controller
                     }
                 }
             }
+          //  $returnData['no_number'] = count($returnData['no']);
             return rjson(200, '加载成功', $returnData);
         }
     }
