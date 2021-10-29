@@ -65,11 +65,11 @@ class Shop extends Base
        return $this->hasOne(User::class,'user_id','user_id');
     }
     //区域
-    public function area(){
+    public function areas(){
         return $this->hasOne(AreaModel::class,'id','area');
     }
     //档口
-    public function mouth(){
+    public function mouths(){
         return $this->hasOne(ShopMouthModel::class,'id','mouth');
     }
     public function job(){
