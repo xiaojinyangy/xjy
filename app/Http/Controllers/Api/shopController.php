@@ -29,7 +29,7 @@ class shopController extends Controller
      */
     public function  userShop(){
         $user_id = $this->request->get('user_id');
-        $user_id = 1000;
+    
         $user_model = new User();
         $userInfo =  $user_model->query()->find($user_id);
         if(empty($userInfo)){
@@ -44,33 +44,32 @@ class shopController extends Controller
                 ->select(['a.id','p.area_name','c.mouth_name','a.status'])
                 ->paginate();
             $result = getPaginateData($result);
-            $returnData = [
-//            "user_name" => $userInfo->nick_name,
-//            "phone" =>  $userInfo->phone,
-//            "headpic" => $userInfo->headpic,
-//                "shop_number" => $result['total'],
-                "list" => $result['data'],
-                //   $data['user_id'] = $user_id
-            ];
+             foreach($result['data'] as $v){
+                $returnData[] = [
+                    'shop_id' => $v['id'],
+                    "area_name"=>$v['area_name'],
+                    "mouth_name"=>$v['mouth_name'],
+                    "status"=>$v['status'],
+                ];
+            }
             return rjson(200,'加载成功',$result['data']);
         }else if ($userInfo->identity == 1){
             //员工
             $shopJobModel =new ShopJob();
           $result =   $shopJobModel->query()->where(['user_id'=>$user_id])->with(['shop'=>function($query){
-                $query->with(['mouth:id,mouth_name','area:id,area_name'])->select(['id','user_id','id','area','mouth','name']);
+                $query->with(['mouths:id,mouth_name','areas:id,area_name'])->select(['id','user_id','id','area','mouth','name']);
             }])->paginate();
-
-//          var_dump($result->toArray());
             $result = getPaginateData($result);
             $returnData =[];
 
             foreach($result['data'] as $v){
-
                 $returnData[] = [
-                    'shop_id' => $v['user_id'],
-                    "area_name"=>$v['area']['area_name'],
-                    "mouth_name"=> $v['mouth']['mouth_name'],
+                    'shop_id' =>$v['shop_id'],
+                    'id' => $v['id'],
+                    "area_name"=>isset($v['shop']['areas']['area_name']) ? $v['shop']['areas']['area_name'] :"",
+                    "mouth_name"=>isset($v['shop']['mouths']['mouth_name']) ? $v['shop']['mouths']['mouth_name']:"",
                     "status"=>$v['status'],
+                    'shop_user_name' =>$v['shop']['name'],
                 ];
             }
             return rjson(0,'加载成功',$returnData);
@@ -168,7 +167,7 @@ class shopController extends Controller
      */
     public function shopJob()
     {
-        $user_id = $this->request->get('id');
+        $user_id = $this->request->get('user_id');
         $user_id = 1000;
         $shopData  = $this->model->getMyShop($user_id);
         $shopIdArr =[];
